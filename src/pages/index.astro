@@ -1,30 +1,11 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
-    <link
-      rel="icon"
-      href="/favicon.ico"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width"
-    />
-    <meta
-      name="generator"
-      content={Astro.generator}
-    />
-    <title>ioana orca</title>
-  </head>
-  <body>
-    <h1>ioana orca</h1>
-  </body>
-</html>
+<BaseLayout title="Ioana Orca">
+  <main class="mx-auto max-w-page px-6 py-24">
+    <p class="text-eyebrow text-muted uppercase">Mindset coach</p>
+    <h1 class="mt-4">Ioana Orca</h1>
+    <h2 class="mt-6 text-olive-deep italic">Coming soon.</h2>
+  </main>
+</BaseLayout>

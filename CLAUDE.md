@@ -1,3 +1,17 @@
+## Approach
+
+Prefer the smallest thing that works. Add abstraction once something has
+repeated, not in anticipation of it. If a smaller version of a change would do,
+make that one and say what you left out.
+
+- Check what the framework already gives you before overriding a default.
+- Use the framework's own extension point rather than inventing one. Brand
+  values belong in Tailwind's `@theme`, not in bespoke `@utility` blocks.
+- Keep design guidelines in the brand doc. Don't enforce them by deleting
+  utilities or otherwise constraining the tooling.
+- Add tooling layers when there is code that needs them, not before.
+- Comments explain why something non-obvious is the way it is. Default to none.
+
 ## Development
 
 When starting the dev server, use background mode:

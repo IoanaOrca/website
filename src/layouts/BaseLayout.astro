@@ -1,0 +1,62 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const releaseTag = import.meta.env.PUBLIC_RELEASE_TAG || 'dev';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <meta
+      name="version"
+      content={releaseTag}
+    />
+
+    <title>{title}</title>
+    {
+      description && (
+        <meta
+          name="description"
+          content={description}
+        />
+      )
+    }
+
+    <Font
+      cssVariable="--internal-font-display"
+      preload
+    />
+    <Font
+      cssVariable="--internal-font-body"
+      preload
+    />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <link
+      rel="icon"
+      href="/favicon.ico"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
