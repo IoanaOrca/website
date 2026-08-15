@@ -1,4 +1,5 @@
 {
+  "name": "ioana-orca-website",
   "type": "module",
   "private": true,
   "engines": {
