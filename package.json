@@ -1,29 +1,17 @@
 {
-  "name": "portofolio",
-  "version": "2.0.0",
-  "private": true,
+  "name": "astro",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
   },
-  "author": "Ioana Orca",
-  "license": "ISC",
-  "devDependencies": {
-    "autoprefixer": "^9.7.3",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.19.1",
-    "rimraf": "^3.0.0",
-    "sass": "^1.57.1",
-    "stylelint": "^12.0.1",
-    "stylelint-config-idiomatic-order": "^8.1.0",
-    "stylelint-scss": "^3.13.0",
-    "vite": "^4.0.3"
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "hamburgers": "^1.1.3",
-    "susy": "^2.2.14"
+    "astro": "^7.2.2"
   }
 }
