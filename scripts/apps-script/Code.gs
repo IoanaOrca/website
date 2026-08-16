@@ -37,8 +37,9 @@ function doPost(e) {
     if (seen.indexOf(email) === -1) {
       sheet.appendRow([
         email,
-        // Stamped server-side: client clocks are wrong often enough to poison
-        // the consent record, which is the column that has to hold up.
+        String(data.firstName || '').trim(),
+        // Server-side: client clocks are wrong often enough to poison the
+        // consent record.
         new Date().toISOString(),
         String(data.source || ''),
         String(data.consent || ''),

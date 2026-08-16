@@ -6,8 +6,10 @@ Edits here are **not** deployed automatically — paste them in and redeploy.
 
 ## First deployment
 
-1. Create a Google Sheet. Row 1 headers: `email`, `timestamp`, `source`,
-   `consent`.
+1. Create a Google Sheet. Row 1 headers, in this order: `email`, `firstName`,
+   `timestamp`, `source`, `consent`. `email` must stay in column A — the
+   duplicate check reads that column by name. `firstName` is optional on the
+   form, so blank cells there are expected.
 2. Extensions → Apps Script. Paste `Code.gs` over the default file.
 3. Deploy → New deployment → Web app.
    - Execute as: **Me**

@@ -57,9 +57,12 @@ Romanian`) with no controller identity, retention statement, or policy link
 
 Needs a decision from Ioana:
 
-- **Error-state copy** — `Something went wrong. Please try again.` is the only
-  user-facing string on the page outside the client-approved set. The brief
-  never specified a server-error state.
+- **Copy outside the approved set** — two strings on the page were never in the
+  client-approved brief: `Something went wrong. Please try again.` (the brief
+  specified no server-error state) and `First name (optional)` (the field was
+  added later). The `(optional)` half is load-bearing, not decoration — without
+  it people assume the field is required, which is the friction the optional
+  field exists to avoid. Reword freely, but keep the optionality visible.
 
 Later:
 

@@ -1,8 +1,15 @@
 export type SubscribeResult =
   { ok: true } | { ok: false; reason: 'invalid' | 'network' | 'server' };
 
-/* Matches the visible promise on the signup card. Bump when that wording
-   changes — the stored value is the consent record. */
+export interface SubscribeFields {
+  email: string;
+  /* Optional on the form — an empty name must never block a signup. */
+  firstName: string;
+  honeypot: string;
+}
+
+/* Stored with every signup. Bump when the promise shown or the fields
+   collected change, once there are rows worth distinguishing. */
 export const CONSENT_VERSION = 'v1';
 
 /* Deliberately loose. RFC-5322 regexes reject real addresses and admit fake
@@ -13,10 +20,11 @@ export function isValidEmail(email: string): boolean {
   return EMAIL_PATTERN.test(email.trim());
 }
 
+/* An object, not positional args: they are all strings, so a transposition
+   would type-check and fail only at runtime. */
 export async function subscribe(
   endpoint: string,
-  email: string,
-  honeypot: string,
+  { email, firstName, honeypot }: SubscribeFields,
 ): Promise<SubscribeResult> {
   if (honeypot) return { ok: true };
   if (!isValidEmail(email)) return { ok: false, reason: 'invalid' };
@@ -30,6 +38,7 @@ export async function subscribe(
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
         email: email.trim().toLowerCase(),
+        firstName: firstName.trim(),
         // Always empty here — the client short-circuits above. Sent anyway so
         // the server can catch bots that post directly and never run this JS.
         website: honeypot,
