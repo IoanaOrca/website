@@ -21,7 +21,7 @@ jobs:
       # Report every failure, not just the first.
       fail-fast: false
       matrix:
-        task: [lint, format:check, check, build]
+        task: [lint, format:check, check, test, build]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
