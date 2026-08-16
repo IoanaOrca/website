@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    # One check per task, so a failure names itself in the PR merge box.
+    # Renaming these breaks any ruleset that requires them by name.
+    name: ${{ matrix.task }}
+    runs-on: ubuntu-latest
+    strategy:
+      # Report every failure, not just the first.
+      fail-fast: false
+      matrix:
+        task: [lint, format:check, check, build]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      # npm ci, not `--omit=dev` — astro, tailwind and the build tooling all
+      # live in devDependencies.
+      - run: npm ci
+      # Runs even though lefthook covers these locally; --no-verify bypasses it.
+      - run: npm run ${{ matrix.task }}

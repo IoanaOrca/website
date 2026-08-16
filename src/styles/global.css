@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+
+/* Colours from the Peach & Olive brand identity doc, v1.0. */
+@theme {
+  --color-shell: #faf7f1;
+  --color-sand: #f0e9dc;
+  --color-peach-tint: #f2d9c4;
+  /* Surface only — peach text on shell measures 1.8:1 and fails. */
+  --color-peach: #e3b08c;
+  --color-olive: #7e8c7a;
+  --color-olive-deep: #5f6d5b;
+  --color-muted: #6e6c5e;
+  --color-ink: #3a3a33;
+
+  --container-page: 1240px;
+  --text-eyebrow: clamp(0.6875rem, 1vw, 0.8125rem);
+  --text-eyebrow--letter-spacing: 0.2em;
+}
+
+/* Maps Astro's font variables onto Tailwind's font-* utilities. */
+@theme inline {
+  --font-display: var(--internal-font-display);
+  --font-body: var(--internal-font-body);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-shell);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.75;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  h1 {
+    font-size: clamp(4rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-size: clamp(2.25rem, 4vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  a {
+    color: var(--color-olive-deep);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-olive-deep);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
