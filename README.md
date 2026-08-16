@@ -16,6 +16,12 @@ npm run dev
 Other scripts are in `package.json`. Working notes and conventions are in
 `CLAUDE.md`.
 
+## Signup
+
+The coming-soon form posts to a Google Apps Script web app backed by a Sheet.
+Setup and redeployment: `scripts/apps-script/README.md`. Local development
+needs `PUBLIC_SUBSCRIBE_URL` in `.env` — copy `.env.example`.
+
 ## TODO
 
 Coming-soon page work is specced in
@@ -42,7 +48,6 @@ Later:
 
 - **Analytics** — Cloudflare Web Analytics (free, cookieless, one script tag) or
   [Umami](https://umami.is) if we need custom events for signup conversions.
-- **Newsletter signup** — form posting to a Google Apps Script web app backed by
-  a Google Sheet. The script URL is public and Apps Script exposes no request
-  headers, so it can't be locked to our domain; needs a honeypot field and
-  probably Cloudflare Turnstile.
+- **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
+  email tool means rewriting the body of `src/lib/subscribe.ts` and changing
+  `PUBLIC_SUBSCRIBE_URL`; nothing else.
