@@ -23,6 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# Agent execution scaffolding. The spec in docs/superpowers/specs/ is kept —
-# it records design rationale that commit messages do not.
-docs/superpowers/plans/
+# Agent scratch and planning docs. Listed here rather than in a
+# .prettierignore because Prettier reads this file too, so one entry keeps
+# both git and the formatter out. Anything worth keeping from these gets
+# written into CLAUDE.md or the code itself.
+.superpowers/
+docs/superpowers/

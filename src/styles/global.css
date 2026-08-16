@@ -78,8 +78,24 @@
     color: var(--color-olive-700);
   }
 
+  /* The focus ring follows its surface. olive-700 is only 1.61:1 on ink-900,
+     well under the 3:1 that WCAG 1.4.11 wants, so a dark surface re-points the
+     token at peach-300 (5.92:1). Custom properties inherit, so a light island
+     nested in a dark section — the signup card — sets it back and everything
+     inside it is correct without any extra selectors. */
+  :root,
+  .bg-paper-50,
+  .bg-paper-100,
+  .bg-peach-100 {
+    --focus-ring: var(--color-olive-700);
+  }
+
+  .bg-ink-900 {
+    --focus-ring: var(--color-peach-300);
+  }
+
   :focus-visible {
-    outline: 2px solid var(--color-olive-700);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 3px;
   }
 

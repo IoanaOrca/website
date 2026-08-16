@@ -24,10 +24,9 @@ needs `PUBLIC_SUBSCRIBE_URL` in `.env` — copy `.env.example`.
 
 ## TODO
 
-Coming-soon page work is specced in
-`docs/superpowers/specs/2026-08-16-coming-soon-page-design.md`. Read that before
-changing the page — it records why several things are the way they are
-(duplicate signups return success on purpose, the input is 16px on purpose).
+Before changing the coming-soon page, read **Decisions that look like bugs** in
+`CLAUDE.md` — duplicate signups return success on purpose, the input is 16px on
+purpose, and a few other things are load-bearing in ways the code doesn't show.
 
 Blocking, and not doable from inside the repo:
 

@@ -1,5 +1,0 @@
-# Prettier only reads the root .gitignore, so nested ones do not reach it.
-# This directory is agent scratch (ledgers, reports, generated diffs) and is
-# ignored via .superpowers/sdd/.gitignore — without this entry, `format:check`
-# fails on freshly written scratch files and `format` rewrites them.
-.superpowers/
