@@ -35,4 +35,4 @@ jobs:
       - run: npm run ${{ matrix.task }}
         env:
           # PRs must not depend on a real endpoint.
-          PUBLIC_SUBSCRIBE_URL: ${{ secrets.SUBSCRIBE_URL || 'https://example.invalid/noop' }}
+          PUBLIC_SUBSCRIBE_URL: ${{ vars.SUBSCRIBE_URL || 'https://example.invalid/noop' }}

@@ -34,8 +34,13 @@ Blocking, and not doable from inside the repo:
   `lint`, `check`, `format:check` and `build` by name. Until `test` joins them
   it runs on PRs without blocking merge, so a red test sits beside a green
   merge button. Settings → Rules, or `gh api`.
-- **Add the `SUBSCRIBE_URL` repository secret** — the Apps Script `/exec` URL.
-  The deploy build fails without it, by design.
+- **Add the `SUBSCRIBE_URL` repository variable** — the Apps Script `/exec`
+  URL. A variable, not a secret: the value is inlined into the public bundle
+  anyway, and unlike a secret it can be read back and verified. Must be a
+  _repository_ variable — `deploy.yml` uses it in the `build` job, while
+  `environment: github-pages` sits on the `deploy` job, so an
+  environment-scoped value would never reach it. The deploy build fails
+  without it, by design.
 - **Finish the privacy policy** — the `/privacy` page exists and is linked from
   the footer, and the policy now names Google (Sheets and Apps Script, the
   signup store) and GitHub Pages (the host) with their transfer bases. Three

@@ -15,8 +15,16 @@ Edits here are **not** deployed automatically — paste them in and redeploy.
    - Execute as: **Me**
    - Who has access: **Anyone**
 4. Copy the `/exec` URL.
-5. Put it in `.env` as `PUBLIC_SUBSCRIBE_URL`, and in the repository secret
-   `SUBSCRIBE_URL` (Settings → Secrets and variables → Actions).
+5. Put it in `.env` as `PUBLIC_SUBSCRIBE_URL`, and in the repository **variable**
+   `SUBSCRIBE_URL` (Settings → Secrets and variables → Actions → _Variables_).
+   A variable rather than a secret on purpose: the URL is inlined into the
+   public JS bundle anyway, so masking buys nothing, and a variable can be read
+   back and checked. A mistyped secret still passes `url: true`, builds, and
+   deploys — the form just fails silently in production.
+
+   It must be a **repository** variable, not an environment one. `deploy.yml`
+   uses it in the `build` job, and `environment: github-pages` is on the
+   `deploy` job, so an environment-scoped value would never reach it.
 
 ## Redeploying after an edit
 
