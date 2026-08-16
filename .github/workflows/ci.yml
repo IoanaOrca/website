@@ -33,3 +33,6 @@ jobs:
       - run: npm ci
       # Runs even though lefthook covers these locally; --no-verify bypasses it.
       - run: npm run ${{ matrix.task }}
+        env:
+          # PRs must not depend on a real endpoint.
+          PUBLIC_SUBSCRIBE_URL: ${{ secrets.SUBSCRIBE_URL || 'https://example.invalid/noop' }}

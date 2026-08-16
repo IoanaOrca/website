@@ -1,0 +1,40 @@
+---
+import SignupForm from './SignupForm.astro';
+---
+
+<section
+  aria-labelledby="something-new"
+  class="bg-ink-900"
+>
+  <div
+    class="mx-auto grid max-w-page grid-cols-1 items-start gap-20 px-gutter py-section lg:grid-cols-2"
+  >
+    <div>
+      <h2
+        id="something-new"
+        class="mb-7 text-xs tracking-eyebrow text-peach-300 uppercase"
+      >
+        Something new is coming
+      </h2>
+      <p class="font-display text-display-lg leading-[1.1] text-paper-50">
+        I’m building a space for women who are ready to understand themselves
+        better, make clearer decisions and create their next chapter.
+      </p>
+      <p class="mt-8 text-lg leading-[1.65] text-paper-50/82">
+        The website is launching soon.
+      </p>
+    </div>
+    <div>
+      <SignupForm />
+      <div class="mt-9 flex flex-col gap-2.5">
+        <p class="text-base text-paper-50/82">In the meantime, follow along:</p>
+        <a
+          href="https://instagram.com/ioanaorca"
+          class="font-display text-display-md text-peach-300 hover:text-paper-50"
+        >
+          @ioanaorca
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

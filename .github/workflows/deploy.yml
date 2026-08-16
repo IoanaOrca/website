@@ -31,6 +31,8 @@ jobs:
       - run: npm run build
         env:
           PUBLIC_RELEASE_TAG: ${{ steps.tag.outputs.value }}
+          # No fallback. A missing secret must fail the deploy.
+          PUBLIC_SUBSCRIBE_URL: ${{ secrets.SUBSCRIBE_URL }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -8,6 +8,21 @@ export default defineConfig({
   site: 'https://ioanaorca.com',
   vite: {
     plugins: [tailwindcss()],
+  },
+  env: {
+    schema: {
+      // optional:false fails the build when unset. Deliberate: a form posting
+      // into the void is the worst failure for a page whose only job is
+      // collecting emails. url:true additionally rejects an empty secret.
+      // No startsWith constraint — that would hardcode Apps Script into the
+      // config and undo the point of the subscribe() boundary.
+      PUBLIC_SUBSCRIBE_URL: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: false,
+        url: true,
+      }),
+    },
   },
   image: {
     // `layout` makes <Image> derive srcset and sizes from the source file.
