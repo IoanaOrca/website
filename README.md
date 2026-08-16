@@ -36,11 +36,24 @@ Blocking, and not doable from inside the repo:
   merge button. Settings → Rules, or `gh api`.
 - **Add the `SUBSCRIBE_URL` repository secret** — the Apps Script `/exec` URL.
   The deploy build fails without it, by design.
-- **Privacy notice** — the page collects email addresses from an explicitly EU
-  audience (`Sessions online, in English and Romanian`) and has no controller
-  identity, retention statement, or privacy policy link anywhere, which GDPR
-  Art. 13 requires at the point of collection. Needs a decision on who the
-  controller is and where the policy lives.
+- **Privacy policy page, and a notice linking to it** — the page collects email
+  addresses from an explicitly EU audience (`Sessions online, in English and
+Romanian`) with no controller identity, retention statement, or policy link
+  anywhere. GDPR Art. 13 wants all of that at the point of collection. Two
+  pieces of work: a `/privacy` page, and one line by the signup card or in the
+  footer naming the controller and linking it.
+
+  Blocked on three facts only Ioana can supply: whether the controller is her
+  personally or a registered business (changes the required identity line), how
+  long addresses that never convert are kept, and the contact address for
+  rights requests.
+
+  Related, and worth knowing before the Kit migration: the stored `consent`
+  string records what the person was _shown_, not that _they_ submitted it. The
+  endpoint is unauthenticated and single-opt-in, so anyone can type someone
+  else's address into it. Double opt-in is what actually produces evidence of
+  consent — Kit does it natively, but addresses imported from the Sheet will
+  not carry that provenance.
 
 Needs a decision from Ioana:
 
@@ -56,5 +69,9 @@ Later:
   email tool means rewriting the body of `src/lib/subscribe.ts` and changing
   `PUBLIC_SUBSCRIBE_URL`; nothing else.
 - **Social preview** — `src/layouts/BaseLayout.astro` has no `og:*` or
-  `twitter:card` tags, and the page's only distribution channel is an
-  Instagram bio link.
+  `twitter:card` tags, so the page currently pastes as a bare URL with no
+  image, title or description. Its only distribution channel is an Instagram
+  bio link, so that costs clicks on the one thing the page exists to do.
+  Roughly 15 lines: `site` is already set to `https://ioanaorca.com` so
+  absolute URLs resolve, and `src/assets/images/ioana-hero-studio.jpg` is a
+  usable source for a generated OG image.
