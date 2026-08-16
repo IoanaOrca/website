@@ -9,6 +9,13 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  image: {
+    // `layout` makes <Image> derive srcset and sizes from the source file.
+    // `responsiveStyles` defaults to false — without it the scaling and
+    // object-fit rules are never emitted and images render at intrinsic size.
+    layout: 'constrained',
+    responsiveStyles: true,
+  },
   fonts: [
     // Display/headings. Instrument Serif ships a single weight; the italic is
     // load-bearing here (brand uses it for emphasis), so both styles are needed.

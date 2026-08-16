@@ -1,11 +1,17 @@
 ---
+import Footer from '../components/coming-soon/Footer.astro';
+import Header from '../components/coming-soon/Header.astro';
+import Hero from '../components/coming-soon/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Ioana Orca">
-  <main class="mx-auto max-w-page px-gutter py-section">
-    <p class="text-xs tracking-eyebrow text-ink-500 uppercase">Mindset coach</p>
-    <h1 class="mt-4 text-display-xl">Ioana Orca</h1>
-    <h2 class="mt-6 text-display-lg text-peach-700 italic">Coming soon.</h2>
+<BaseLayout
+  title="Ioana Orca — Coaching for your next chapter"
+  description="I help women understand what’s keeping them stuck, get clear on what they actually want, and make decisions they feel confident about."
+>
+  <Header />
+  <main>
+    <Hero />
   </main>
+  <Footer />
 </BaseLayout>
