@@ -13,7 +13,15 @@ permissions:
 
 jobs:
   verify:
+    # One check per task, so a failure names itself in the PR merge box.
+    # Renaming these breaks any ruleset that requires them by name.
+    name: ${{ matrix.task }}
     runs-on: ubuntu-latest
+    strategy:
+      # Report every failure, not just the first.
+      fail-fast: false
+      matrix:
+        task: [lint, format:check, check, build]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,7 +32,4 @@ jobs:
       # live in devDependencies.
       - run: npm ci
       # Runs even though lefthook covers these locally; --no-verify bypasses it.
-      - run: npm run lint
-      - run: npm run format:check
-      - run: npm run check
-      - run: npm run build
+      - run: npm run ${{ matrix.task }}
