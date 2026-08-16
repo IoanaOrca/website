@@ -34,13 +34,15 @@ Blocking, and not doable from inside the repo:
   `lint`, `check`, `format:check` and `build` by name. Until `test` joins them
   it runs on PRs without blocking merge, so a red test sits beside a green
   merge button. Settings → Rules, or `gh api`.
-- **Add the `SUBSCRIBE_URL` repository variable** — the Apps Script `/exec`
-  URL. A variable, not a secret: the value is inlined into the public bundle
-  anyway, and unlike a secret it can be read back and verified. Must be a
-  _repository_ variable — `deploy.yml` uses it in the `build` job, while
-  `environment: github-pages` sits on the `deploy` job, so an
-  environment-scoped value would never reach it. The deploy build fails
-  without it, by design.
+- **Run the signup end to end.** The Apps Script is deployed and the
+  `SUBSCRIBE_URL` repository variable is set, but nothing has ever posted to
+  the real endpoint — everything so far was built against
+  `https://example.invalid/noop`. The specific unknown is the Apps Script
+  302 to `googleusercontent.com` that the whole CORS approach depends on: if
+  the followed response doesn't carry `Access-Control-Allow-Origin`, the
+  client can't read the reply and every signup shows the generic error even
+  though the row lands. Submit twice with the same address and expect two
+  "You're on the list" and exactly one row.
 - **Finish the privacy policy** — the `/privacy` page exists and is linked from
   the footer, and the policy now names Google (Sheets and Apps Script, the
   signup store) and GitHub Pages (the host) with their transfer bases. Three
