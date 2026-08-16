@@ -432,6 +432,8 @@ Google's editor.
 ```js
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
+  if (!data || typeof data !== 'object')
+    return json({ ok: false, reason: 'invalid' });
   if (data.website) return json({ ok: true }); // honeypot
   const email = String(data.email || '')
     .trim()
@@ -439,7 +441,9 @@ function doPost(e) {
   if (!isEmail(email)) return json({ ok: false, reason: 'invalid' });
 
   const lock = LockService.getScriptLock();
-  lock.waitLock(10000); // dedupe is read-then-write
+  // dedupe is read-then-write; tryLock (not waitLock) so a timeout returns
+  // instead of throwing
+  if (!lock.tryLock(10000)) return json({ ok: false, reason: 'server' });
   try {
     const sheet = SpreadsheetApp.getActiveSheet();
     const seen = sheet.getRange('A:A').getValues().flat();
