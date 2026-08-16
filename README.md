@@ -34,15 +34,6 @@ Blocking, and not doable from inside the repo:
   `lint`, `check`, `format:check` and `build` by name. Until `test` joins them
   it runs on PRs without blocking merge, so a red test sits beside a green
   merge button. Settings → Rules, or `gh api`.
-- **Run the signup end to end.** The Apps Script is deployed and the
-  `SUBSCRIBE_URL` repository variable is set, but nothing has ever posted to
-  the real endpoint — everything so far was built against
-  `https://example.invalid/noop`. The specific unknown is the Apps Script
-  302 to `googleusercontent.com` that the whole CORS approach depends on: if
-  the followed response doesn't carry `Access-Control-Allow-Origin`, the
-  client can't read the reply and every signup shows the generic error even
-  though the row lands. Submit twice with the same address and expect two
-  "You're on the list" and exactly one row.
 - **Finish the privacy policy** — the `/privacy` page exists and is linked from
   the footer, and the policy now names Google (Sheets and Apps Script, the
   signup store) and GitHub Pages (the host) with their transfer bases. Three
@@ -80,6 +71,19 @@ Later:
 
 - **Analytics** — Cloudflare Web Analytics (free, cookieless, one script tag) or
   [Umami](https://umami.is) if we need custom events for signup conversions.
+- **Email Ioana on each signup** — right now the only way to know someone
+  signed up is to open the Sheet. `MailApp.sendEmail()` in `doPost` would
+  notify her. Two things to get right:
+  - **Wrap the send in its own `try/catch`.** `MailApp` throws when the daily
+    quota is exhausted (100/day on a consumer Gmail account), and an
+    unhandled throw there would fail the whole request — the subscriber would
+    see the generic error even though their row landed. The notification is
+    the least important thing in that function and must never be able to
+    break the signup.
+  - **Send only when a row is actually appended**, i.e. inside the
+    `indexOf === -1` branch. A duplicate submit writes nothing and a tripped
+    honeypot returns before the sheet is touched at all, so neither should
+    generate mail.
 - **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
   email tool means rewriting the body of `src/lib/subscribe.ts` and changing
   `PUBLIC_SUBSCRIBE_URL`; nothing else.
