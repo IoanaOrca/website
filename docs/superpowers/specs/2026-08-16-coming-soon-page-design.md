@@ -157,7 +157,7 @@ section. Section shape:
 
 ```astro
 <section class="bg-… border-…">
-  <div class="px-gutter py-section mx-auto max-w-page">…</div>
+  <div class="mx-auto max-w-page px-gutter py-section">…</div>
 </section>
 ```
 

@@ -150,10 +150,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Ioana Orca">
-  <main class="px-gutter py-section mx-auto max-w-page">
-    <p class="tracking-eyebrow text-ink-500 text-xs uppercase">Mindset coach</p>
-    <h1 class="text-display-xl mt-4">Ioana Orca</h1>
-    <h2 class="text-display-lg text-peach-700 mt-6 italic">Coming soon.</h2>
+  <main class="mx-auto max-w-page px-gutter py-section">
+    <p class="text-xs tracking-eyebrow text-ink-500 uppercase">Mindset coach</p>
+    <h1 class="mt-4 text-display-xl">Ioana Orca</h1>
+    <h2 class="mt-6 text-display-lg text-peach-700 italic">Coming soon.</h2>
   </main>
 </BaseLayout>
 ```
@@ -476,7 +476,7 @@ git commit -m "feat: add email subscribe module with vitest coverage"
 
 ```astro
 <section class="[background and utilities] border">
-  <div class="px-gutter py-section mx-auto max-w-page">…</div>
+  <div class="mx-auto max-w-page px-gutter py-section">…</div>
 </section>
 ```
 
@@ -499,19 +499,19 @@ In `astro.config.mjs`, add an `image` block after `vite`:
 - [ ] **Step 2: Create `Header.astro`**
 
 ```astro
-<header class="border-paper-200 border-b">
+<header class="border-b border-paper-200">
   <div
-    class="px-gutter mx-auto flex max-w-page items-end justify-between gap-8 pt-8 pb-6"
+    class="mx-auto flex max-w-page items-end justify-between gap-8 px-gutter pt-8 pb-6"
   >
     <div class="flex flex-col gap-1.5">
-      <p class="text-display-sm text-ink-900 font-display tracking-[0.01em]">
+      <p class="font-display text-display-sm tracking-[0.01em] text-ink-900">
         Ioana Orca
       </p>
-      <p class="text-peach-700 font-display text-lg italic">
+      <p class="font-display text-lg text-peach-700 italic">
         Coaching for your next chapter.
       </p>
     </div>
-    <p class="tracking-eyebrow text-ink-500 text-xs uppercase">
+    <p class="text-xs tracking-eyebrow text-ink-500 uppercase">
       Launching autumn 2026
     </p>
   </div>
@@ -531,17 +531,17 @@ import heroPortrait from '../../assets/images/ioana-hero-studio.jpg';
 
 <section>
   <div
-    class="px-gutter py-section mx-auto grid max-w-page grid-cols-1 items-center gap-18 lg:grid-cols-2"
+    class="mx-auto grid max-w-page grid-cols-1 items-center gap-18 px-gutter py-section lg:grid-cols-2"
   >
     <div>
       <h1 class="text-display-xl leading-[1.06] tracking-[-0.01em]">
         <span class="text-ink-900">You know something needs to change.</span>
-        <span class="text-peach-700 mt-1.5 block italic">
+        <span class="mt-1.5 block text-peach-700 italic">
           You just don’t know what to do next.
         </span>
       </h1>
-      <div class="bg-peach-300 my-11 h-0.5 w-22"></div>
-      <p class="text-ink-700 max-w-lg text-lg leading-[1.65]">
+      <div class="my-11 h-0.5 w-22 bg-peach-300"></div>
+      <p class="max-w-lg text-lg leading-[1.65] text-ink-700">
         I help women understand what’s keeping them stuck, get clear on what
         they actually want, and make decisions they feel confident about.
       </p>
@@ -565,10 +565,10 @@ import heroPortrait from '../../assets/images/ioana-hero-studio.jpg';
 ```astro
 <footer>
   <div
-    class="px-gutter mx-auto flex max-w-page flex-col justify-between gap-8 py-11 sm:flex-row sm:items-center"
+    class="mx-auto flex max-w-page flex-col justify-between gap-8 px-gutter py-11 sm:flex-row sm:items-center"
   >
-    <p class="tracking-eyebrow text-ink-700 text-sm uppercase">Ioana Orca</p>
-    <p class="text-ink-500 text-sm">
+    <p class="text-sm tracking-eyebrow text-ink-700 uppercase">Ioana Orca</p>
+    <p class="text-sm text-ink-500">
       Sessions online, in English and Romanian.
     </p>
   </div>
@@ -634,14 +634,14 @@ git commit -m "feat: add coming soon header, hero and footer"
 ```astro
 <section
   aria-labelledby="this-might-be-you"
-  class="bg-paper-100 border-paper-200 border-y"
+  class="border-y border-paper-200 bg-paper-100"
 >
   <div
-    class="px-gutter py-section mx-auto grid max-w-page grid-cols-1 items-start gap-16 lg:grid-cols-[1fr_3fr]"
+    class="mx-auto grid max-w-page grid-cols-1 items-start gap-16 px-gutter py-section lg:grid-cols-[1fr_3fr]"
   >
     <h2
       id="this-might-be-you"
-      class="tracking-eyebrow text-ink-700 pt-3 text-xs uppercase"
+      class="pt-3 text-xs tracking-eyebrow text-ink-700 uppercase"
     >
       This might be you
     </h2>
@@ -650,24 +650,24 @@ git commit -m "feat: add coming soon header, hero and footer"
         role="list"
         class="flex list-none flex-col gap-3.5"
       >
-        <li class="text-ink-900 text-2xl leading-[1.4]">
+        <li class="text-2xl leading-[1.4] text-ink-900">
           Maybe you’re thinking about leaving your job.
         </li>
-        <li class="text-ink-900 text-2xl leading-[1.4]">
+        <li class="text-2xl leading-[1.4] text-ink-900">
           Starting something of your own.
         </li>
-        <li class="text-ink-900 text-2xl leading-[1.4]">
+        <li class="text-2xl leading-[1.4] text-ink-900">
           Ending or changing a relationship.
         </li>
-        <li class="text-ink-900 text-2xl leading-[1.4]">
+        <li class="text-2xl leading-[1.4] text-ink-900">
           Finally showing your ideas to the world.
         </li>
-        <li class="text-ink-900 text-2xl leading-[1.4]">
+        <li class="text-2xl leading-[1.4] text-ink-900">
           Or simply admitting that the life that used to work for you… doesn’t
           anymore.
         </li>
       </ul>
-      <p class="text-display-md mt-13 font-display leading-[1.3]">
+      <p class="mt-13 font-display text-display-md leading-[1.3]">
         <span class="text-ink-900">You’re not necessarily lost.</span>
         <span class="text-peach-700 italic">
           You might just be in the middle of becoming someone who wants
@@ -705,27 +705,27 @@ const steps = [
 ---
 
 <section aria-labelledby="what-you-can-expect">
-  <div class="px-gutter py-section mx-auto max-w-page">
+  <div class="mx-auto max-w-page px-gutter py-section">
     <h2
       id="what-you-can-expect"
-      class="tracking-eyebrow text-ink-500 mb-12 text-xs uppercase"
+      class="mb-12 text-xs tracking-eyebrow text-ink-500 uppercase"
     >
       What you can expect
     </h2>
     <ol
-      class="border-paper-200 bg-paper-200 grid list-none grid-cols-1 gap-0.5 border lg:grid-cols-3"
+      class="grid list-none grid-cols-1 gap-0.5 border border-paper-200 bg-paper-200 lg:grid-cols-3"
     >
       {
         steps.map((step) => (
-          <li class="bg-paper-50 flex flex-col gap-3.5 p-10">
+          <li class="flex flex-col gap-3.5 bg-paper-50 p-10">
             <span
               aria-hidden="true"
-              class="text-display-xs text-peach-700 font-display"
+              class="font-display text-display-xs text-peach-700"
             >
               {step.numeral}
             </span>
             <h3 class="text-display-md leading-[1.2]">{step.title}</h3>
-            <p class="text-ink-700 text-base leading-[1.65]">{step.body}</p>
+            <p class="text-base leading-[1.65] text-ink-700">{step.body}</p>
           </li>
         ))
       }
@@ -785,24 +785,24 @@ The `1:1 Coaching / Demartini Method` label is visually a label but structurally
 
 ```astro
 <section aria-labelledby="how-i-work">
-  <div class="px-gutter pb-section mx-auto max-w-page">
+  <div class="mx-auto max-w-page px-gutter pb-section">
     <div
-      class="bg-peach-100 grid grid-cols-1 items-start gap-16 rounded-[3px] p-16 lg:grid-cols-[1fr_2fr]"
+      class="grid grid-cols-1 items-start gap-16 rounded-[3px] bg-peach-100 p-16 lg:grid-cols-[1fr_2fr]"
     >
       <h2
         id="how-i-work"
-        class="text-ink-700 text-sm leading-[1.7] tracking-[0.16em] uppercase"
+        class="text-sm leading-[1.7] tracking-[0.16em] text-ink-700 uppercase"
       >
         1:1 Coaching<br />Demartini Method
       </h2>
       <div class="max-w-2xl">
-        <p class="text-ink-900 text-xl leading-[1.6]">
+        <p class="text-xl leading-[1.6] text-ink-900">
           My work combines coaching with the Demartini Method to help you
           explore the perceptions, emotional patterns and beliefs that can keep
           you stuck.
         </p>
         <p
-          class="text-display-md text-peach-700 mt-8 font-display leading-[1.35] italic"
+          class="mt-8 font-display text-display-md leading-[1.35] text-peach-700 italic"
         >
           No endless analysing. No telling you what you should do. We work
           towards understanding — and then making a choice.
@@ -828,10 +828,10 @@ import portrait from '../../assets/images/ioana-portrait-outdoor.jpg';
 
 <section
   aria-labelledby="hi-im-ioana"
-  class="border-paper-200 border-t"
+  class="border-t border-paper-200"
 >
   <div
-    class="px-gutter py-section mx-auto grid max-w-page grid-cols-1 items-center gap-18 lg:grid-cols-[2fr_3fr]"
+    class="mx-auto grid max-w-page grid-cols-1 items-center gap-18 px-gutter py-section lg:grid-cols-[2fr_3fr]"
   >
     <Image
       src={portrait}
@@ -842,22 +842,22 @@ import portrait from '../../assets/images/ioana-portrait-outdoor.jpg';
     <div>
       <h2
         id="hi-im-ioana"
-        class="text-display-lg mb-8 leading-[1.1]"
+        class="mb-8 text-display-lg leading-[1.1]"
       >
         Hi, I’m Ioana.
       </h2>
       <div class="flex max-w-xl flex-col gap-6">
-        <p class="text-ink-700 text-lg leading-[1.75]">
+        <p class="text-lg leading-[1.75] text-ink-700">
           I know what it feels like to realise that the life you built isn’t
           necessarily the life you want next.
         </p>
-        <p class="text-ink-700 text-lg leading-[1.75]">
+        <p class="text-lg leading-[1.75] text-ink-700">
           I’ve changed countries, careers, relationships, plans and directions.
           And I’ve learned that understanding yourself isn’t about finding
           what’s wrong with you.
         </p>
         <p
-          class="text-display-md text-ink-900 font-display leading-[1.4] italic"
+          class="font-display text-display-md leading-[1.4] text-ink-900 italic"
         >
           It’s about understanding yourself well enough to make different
           choices.
@@ -969,16 +969,16 @@ PUBLIC_SUBSCRIBE_URL=https://script.google.com/macros/s/REPLACE_ME/exec
 The honeypot is positioned off-screen rather than `display: none`, which naive bots skip. `tabindex="-1"` keeps it out of the tab order, which is what makes `aria-hidden` on an input acceptable here.
 
 ```astro
-<div class="bg-paper-50 rounded-[3px] p-12">
+<div class="rounded-[3px] bg-paper-50 p-12">
   <form
     id="signup"
     novalidate
     class="flex flex-col gap-4.5"
   >
-    <h3 class="text-display-md font-display leading-[1.2]">
+    <h3 class="font-display text-display-md leading-[1.2]">
       Want to know when it’s live?
     </h3>
-    <p class="text-ink-700 text-base leading-[1.6]">
+    <p class="text-base leading-[1.6] text-ink-700">
       I’ll send one message when the website opens — nothing else.
     </p>
 
@@ -998,7 +998,7 @@ The honeypot is positioned off-screen rather than `display: none`, which naive b
 
     <label
       for="email"
-      class="text-ink-500 mt-3.5 text-xs tracking-[0.16em] uppercase"
+      class="mt-3.5 text-xs tracking-[0.16em] text-ink-500 uppercase"
     >
       Email
     </label>
@@ -1010,19 +1010,19 @@ The honeypot is positioned off-screen rather than `display: none`, which naive b
       autocomplete="email"
       inputmode="email"
       placeholder="you@email.com"
-      class="border-paper-200 bg-paper-50 placeholder:text-ink-500 rounded-[2px] border px-4 py-4 text-base"
+      class="rounded-[2px] border border-paper-200 bg-paper-50 px-4 py-4 text-base placeholder:text-ink-500"
     />
     <p
       id="email-error"
       role="alert"
       hidden
-      class="text-peach-700 text-sm"
+      class="text-sm text-peach-700"
     >
     </p>
 
     <button
       type="submit"
-      class="text-paper-50 mt-2 w-full rounded-[2px] bg-olive-600 py-4 text-sm font-semibold tracking-[0.14em] uppercase transition-[background-color] duration-150 hover:bg-olive-700 disabled:cursor-default disabled:opacity-70"
+      class="mt-2 w-full rounded-[2px] bg-olive-600 py-4 text-sm font-semibold tracking-[0.14em] text-paper-50 uppercase transition-[background-color] duration-150 hover:bg-olive-700 disabled:cursor-default disabled:opacity-70"
     >
       Join the list
     </button>
@@ -1036,11 +1036,11 @@ The honeypot is positioned off-screen rather than `display: none`, which naive b
     <h3
       id="signup-success-heading"
       tabindex="-1"
-      class="text-display-md font-display leading-[1.2]"
+      class="font-display text-display-md leading-[1.2]"
     >
       You’re on the list.
     </h3>
-    <p class="text-ink-700 text-base">
+    <p class="text-base text-ink-700">
       I’ll be in touch when the website opens.
     </p>
   </div>
@@ -1144,30 +1144,30 @@ import SignupForm from './SignupForm.astro';
   class="bg-ink-900"
 >
   <div
-    class="px-gutter py-section mx-auto grid max-w-page grid-cols-1 items-start gap-20 lg:grid-cols-2"
+    class="mx-auto grid max-w-page grid-cols-1 items-start gap-20 px-gutter py-section lg:grid-cols-2"
   >
     <div>
       <h2
         id="something-new"
-        class="tracking-eyebrow text-peach-300 mb-7 text-xs uppercase"
+        class="mb-7 text-xs tracking-eyebrow text-peach-300 uppercase"
       >
         Something new is coming
       </h2>
-      <p class="text-display-lg text-paper-50 font-display leading-[1.1]">
+      <p class="font-display text-display-lg leading-[1.1] text-paper-50">
         I’m building a space for women who are ready to understand themselves
         better, make clearer decisions and create their next chapter.
       </p>
-      <p class="text-paper-50/82 mt-8 text-lg leading-[1.65]">
+      <p class="mt-8 text-lg leading-[1.65] text-paper-50/82">
         The website is launching soon.
       </p>
     </div>
     <div>
       <SignupForm />
       <div class="mt-9 flex flex-col gap-2.5">
-        <p class="text-paper-50/82 text-base">In the meantime, follow along:</p>
+        <p class="text-base text-paper-50/82">In the meantime, follow along:</p>
         <a
           href="https://instagram.com/ioanaorca"
-          class="text-display-md text-peach-300 hover:text-paper-50 font-display"
+          class="font-display text-display-md text-peach-300 hover:text-paper-50"
         >
           @ioanaorca
         </a>
