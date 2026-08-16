@@ -36,24 +36,29 @@ Blocking, and not doable from inside the repo:
   merge button. Settings → Rules, or `gh api`.
 - **Add the `SUBSCRIBE_URL` repository secret** — the Apps Script `/exec` URL.
   The deploy build fails without it, by design.
-- **Privacy policy page, and a notice linking to it** — the page collects email
-  addresses from an explicitly EU audience (`Sessions online, in English and
-Romanian`) with no controller identity, retention statement, or policy link
-  anywhere. GDPR Art. 13 wants all of that at the point of collection. Two
-  pieces of work: a `/privacy` page, and one line by the signup card or in the
-  footer naming the controller and linking it.
+- **Finish the privacy policy** — the `/privacy` page exists and is linked from
+  the footer, and the policy now names Google (Sheets and Apps Script, the
+  signup store) and GitHub Pages (the host) with their transfer bases. Three
+  gaps remain, all needing facts only Ioana can supply:
+  - No retention period for the signup list. The policy says data is kept
+    "until we transfer it to an email provider or you ask us to erase it",
+    which is honest but open-ended. How long is an address that never converts
+    kept?
+  - The controller is "Ioana Iordache" and the site is "Ioana Orca", with
+    nothing connecting them. A visitor can't tell it's the same person —
+    "Ioana Iordache, trading as Ioana Orca" would fix it.
+  - The policy still describes cookies with a consent management solution,
+    web analytics, a contact form, an online shop and employees. Kept
+    deliberately because analytics are coming, but the cookie section claims a
+    consent mechanism that does not exist — when analytics land, either install
+    a real CMP or narrow that section.
 
-  Blocked on three facts only Ioana can supply: whether the controller is her
-  personally or a registered business (changes the required identity line), how
-  long addresses that never convert are kept, and the contact address for
-  rights requests.
-
-  Related, and worth knowing before the Kit migration: the stored `consent`
-  string records what the person was _shown_, not that _they_ submitted it. The
-  endpoint is unauthenticated and single-opt-in, so anyone can type someone
-  else's address into it. Double opt-in is what actually produces evidence of
-  consent — Kit does it natively, but addresses imported from the Sheet will
-  not carry that provenance.
+  Worth knowing before the Kit migration: the stored `consent` string records
+  what the person was _shown_, not that _they_ submitted it. The endpoint is
+  unauthenticated and single-opt-in, so anyone can type someone else's address
+  into it. Double opt-in is what actually produces evidence of consent — Kit
+  does it natively, but addresses imported from the Sheet will not carry that
+  provenance.
 
 Needs a decision from Ioana:
 
