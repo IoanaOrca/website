@@ -16,6 +16,9 @@ function doPost(e) {
     return json({ ok: false, reason: 'invalid' });
   }
 
+  if (!data || typeof data !== 'object')
+    return json({ ok: false, reason: 'invalid' });
+
   // Honeypot. The browser short-circuits before sending, so a filled value
   // means something posted here directly without running our JavaScript.
   if (data.website) return json({ ok: true });
@@ -27,7 +30,7 @@ function doPost(e) {
 
   // The dedupe is a read-then-write, so concurrent submits must serialise.
   var lock = LockService.getScriptLock();
-  lock.waitLock(10000);
+  if (!lock.tryLock(10000)) return json({ ok: false, reason: 'server' });
   try {
     var sheet = SpreadsheetApp.getActiveSheet();
     var seen = sheet.getRange('A:A').getValues().flat();

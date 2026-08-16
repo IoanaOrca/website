@@ -37,6 +37,11 @@ Blocking, and not doable from inside the repo:
   merge button. Settings → Rules, or `gh api`.
 - **Add the `SUBSCRIBE_URL` repository secret** — the Apps Script `/exec` URL.
   The deploy build fails without it, by design.
+- **Privacy notice** — the page collects email addresses from an explicitly EU
+  audience (`Sessions online, in English and Romanian`) and has no controller
+  identity, retention statement, or privacy policy link anywhere, which GDPR
+  Art. 13 requires at the point of collection. Needs a decision on who the
+  controller is and where the policy lives.
 
 Needs a decision from Ioana:
 
@@ -51,3 +56,6 @@ Later:
 - **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
   email tool means rewriting the body of `src/lib/subscribe.ts` and changing
   `PUBLIC_SUBSCRIBE_URL`; nothing else.
+- **Social preview** — `src/layouts/BaseLayout.astro` has no `og:*` or
+  `twitter:card` tags, and the page's only distribution channel is an
+  Instagram bio link.

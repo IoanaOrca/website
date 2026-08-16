@@ -30,6 +30,7 @@ agreed during brainstorming.
 | `showEmailForm` / `showPersonal` flags    | Dropped, both sections always render                            | Both are known `true`; a flag for a known value is speculative config    |
 | Section padding 96 / 104                  | One fluid `--spacing-section`                                   | Two values one step apart                                                |
 | No semantics specified                    | Landmarks, one `h1`, `ul`/`ol`, `role="alert"`                  | The prototype has none                                                   |
+| `subscribe(email, honeypot)`              | `subscribe(endpoint, email, honeypot)`                          | Endpoint injected as an argument so unit tests need no env stubbing      |
 
 Personal-note image stays 1:1 as specced — in the narrower column a 3:4 would run ~700px
 tall against a ~350px text block.
@@ -354,13 +355,16 @@ export type SubscribeResult =
 
 export function isValidEmail(email: string): boolean;
 export function subscribe(
+  endpoint: string,
   email: string,
   honeypot: string,
 ): Promise<SubscribeResult>;
 ```
 
-`SignupForm.astro` imports only these. Migrating to Kit later rewrites the body of
-`subscribe()` and changes one env var; the component, markup, and tests do not move.
+`SignupForm.astro` imports only these. The endpoint is injected as the first argument
+rather than read from the env module directly, so the unit tests need no env stubbing.
+Migrating to Kit later rewrites the body of `subscribe()` and changes one env var; the
+component, markup, and tests do not move.
 
 Validation is `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`. Not an RFC-5322 regex — those reject real
 addresses and admit fake ones. The client catches typos; the server confirms delivery.

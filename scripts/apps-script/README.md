@@ -28,6 +28,8 @@ breaks the live form.
   var so local development can point at a throwaway sheet.
 - Duplicate addresses return success without a second row. Do not "fix" this —
   disclosing list membership is the bug.
-- Storing `consent` is what makes a later import into a real email tool
-  defensible under GDPR. Bump the version string in `src/lib/subscribe.ts` if
-  the wording on the signup card changes.
+- Storing `consent` records the exact wording shown to the person at the point
+  of submission. That's necessary but not sufficient for GDPR purposes on its
+  own — the endpoint is unauthenticated and single-opt-in, so it cannot prove
+  the address belongs to the person who submitted it. Bump the version string
+  in `src/lib/subscribe.ts` if the wording on the signup card changes.

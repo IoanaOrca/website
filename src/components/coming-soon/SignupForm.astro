@@ -1,4 +1,4 @@
-<div class="rounded-[3px] bg-paper-50 p-12">
+<div class="rounded-card bg-paper-50 p-card">
   <form
     id="signup"
     novalidate
@@ -39,7 +39,7 @@
       autocomplete="email"
       inputmode="email"
       placeholder="you@email.com"
-      class="rounded-[2px] border border-paper-200 bg-paper-50 px-4 py-4 text-base placeholder:text-ink-500"
+      class="rounded-control border border-ink-500 bg-paper-50 px-4 py-4 text-base placeholder:text-ink-500 aria-invalid:border-peach-700"
     />
     <p
       id="email-error"
@@ -51,7 +51,7 @@
 
     <button
       type="submit"
-      class="mt-2 w-full rounded-[2px] bg-olive-600 py-4 text-sm font-semibold tracking-[0.14em] text-paper-50 uppercase transition-[background-color] duration-150 hover:bg-olive-700 disabled:cursor-default disabled:opacity-70"
+      class="mt-2 w-full rounded-control bg-olive-600 py-4 text-sm font-semibold tracking-[0.14em] text-paper-50 uppercase transition-[background-color] duration-150 hover:bg-olive-700 disabled:cursor-default disabled:opacity-70"
     >
       Join the list
     </button>
@@ -103,7 +103,6 @@
       error.hidden = false;
       email.setAttribute('aria-invalid', 'true');
       email.setAttribute('aria-describedby', 'email-error');
-      email.classList.add('border-peach-700');
     };
 
     const clearError = () => {
@@ -111,7 +110,6 @@
       error.textContent = '';
       email.removeAttribute('aria-invalid');
       email.removeAttribute('aria-describedby');
-      email.classList.remove('border-peach-700');
     };
 
     // Only after a failed submit — never on every keystroke.

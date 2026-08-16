@@ -27,11 +27,15 @@ const steps = [
       What you can expect
     </h2>
     <ol
+      role="list"
       class="grid list-none grid-cols-1 gap-0.5 border border-paper-200 bg-paper-200 lg:grid-cols-3"
     >
       {
         steps.map((step) => (
-          <li class="flex flex-col gap-3.5 bg-paper-50 p-10">
+          <li
+            role="listitem"
+            class="flex flex-col gap-3.5 bg-paper-50 p-10"
+          >
             <span
               aria-hidden="true"
               class="font-display text-display-xs text-peach-700"
