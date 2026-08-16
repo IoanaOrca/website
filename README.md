@@ -19,8 +19,9 @@ Other scripts are in `package.json`. Working notes and conventions are in
 ## TODO
 
 Coming-soon page work is specced in
-`docs/superpowers/specs/2026-08-16-coming-soon-page-design.md` and planned in
-`docs/superpowers/plans/2026-08-16-coming-soon-page.md`.
+`docs/superpowers/specs/2026-08-16-coming-soon-page-design.md`. Read that before
+changing the page — it records why several things are the way they are
+(duplicate signups return success on purpose, the input is 16px on purpose).
 
 Blocking, and not doable from inside the repo:
 

@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Agent execution scaffolding. The spec in docs/superpowers/specs/ is kept —
+# it records design rationale that commit messages do not.
+docs/superpowers/plans/
