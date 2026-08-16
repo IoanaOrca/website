@@ -1,43 +1,26 @@
-# Astro Starter Kit: Minimal
+# ioanaorca.com
+
+Personal site for Ioana Orca, mindset coach.
+
+## Stack
+
+- [Astro](https://astro.build) — static output, no client JS by default
+- [Tailwind](https://tailwindcss.com) — brand tokens in `src/styles/global.css`
+- GitHub Pages — deployed on push to `main`
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Other scripts are in `package.json`. Working notes and conventions are in
+`CLAUDE.md`.
 
-## 🚀 Project Structure
+## TODO
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Analytics** — Cloudflare Web Analytics (free, cookieless, one script tag) or
+  [Umami](https://umami.is) if we need custom events for signup conversions.
+- **Newsletter signup** — form posting to a Google Apps Script web app backed by
+  a Google Sheet. The script URL is public and Apps Script exposes no request
+  headers, so it can't be locked to our domain; needs a honeypot field and
+  probably Cloudflare Turnstile.
