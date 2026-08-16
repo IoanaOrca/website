@@ -11,14 +11,24 @@
       I’ll send one message when the website opens — nothing else.
     </p>
 
+    {
+      /*
+      Honeypot. Off-screen rather than display:none, which naive bots skip.
+      The field is deliberately NOT called website/url/name/company: password
+      managers fill those on sight and ignore autocomplete="off", and a filled
+      honeypot silently discards a real signup. "subject" matches no autofill
+      heuristic. The wire key stays `website` in subscribe.ts — only the DOM
+      name needs to be unguessable to autofill.
+    */
+    }
     <div
       aria-hidden="true"
       class="absolute -left-[9999px]"
     >
-      <label for="website">Website</label>
+      <label for="subject">Subject</label>
       <input
-        id="website"
-        name="website"
+        id="subject"
+        name="subject"
         type="text"
         tabindex="-1"
         autocomplete="off"
@@ -89,7 +99,7 @@
     '#signup-success-heading',
   );
   const email = document.querySelector<HTMLInputElement>('#email');
-  const honeypot = document.querySelector<HTMLInputElement>('#website');
+  const honeypot = document.querySelector<HTMLInputElement>('#subject');
   const error = document.querySelector<HTMLElement>('#email-error');
   const button = form?.querySelector<HTMLButtonElement>(
     'button[type="submit"]',

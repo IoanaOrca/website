@@ -68,6 +68,24 @@ Later:
 - **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
   email tool means rewriting the body of `src/lib/subscribe.ts` and changing
   `PUBLIC_SUBSCRIBE_URL`; nothing else.
+- **Signup form rough edges** — found in review, deliberately deferred because
+  each needs a copy or design decision rather than a fix:
+  - A server or network failure reuses the invalid-email path, so it sets
+    `aria-invalid="true"` on a perfectly good address and points
+    `aria-describedby` at a message that isn't about the field. Wants its own
+    `role="alert"` below the button, which means new copy.
+  - Nothing is announced between submit and result. If you submit with Enter
+    from the input, focus stays there and the `Sending…` label change reaches
+    no assistive tech. `aria-busy` on the form, or route it through the alert
+    region.
+  - The card collapses from ~500px to ~190px when it swaps to the success
+    state, yanking the footer up under whoever is reading the confirmation. A
+    `min-h` holds the space.
+  - The six-way null guard around the DOM lookups silently skips attaching all
+    listeners if an id is ever mistyped. The form has no `action` and uses
+    `novalidate`, so a submit would then fall through to a default GET reload
+    with the email in the query string. Registering an unconditional
+    `preventDefault` before the guard is cheap insurance.
 - **Social preview** — `src/layouts/BaseLayout.astro` has no `og:*` or
   `twitter:card` tags, so the page currently pastes as a bare URL with no
   image, title or description. Its only distribution channel is an Instagram
