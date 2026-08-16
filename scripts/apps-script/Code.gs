@@ -19,8 +19,8 @@ function doPost(e) {
   if (!data || typeof data !== 'object')
     return json({ ok: false, reason: 'invalid' });
 
-  // Honeypot. The browser short-circuits before sending, so a filled value
-  // means something posted here directly without running our JavaScript.
+  // Honeypot. The browser short-circuits first, so a filled value means
+  // something posted here without running our JavaScript.
   if (data.website) return json({ ok: true });
 
   var email = String(data.email || '')

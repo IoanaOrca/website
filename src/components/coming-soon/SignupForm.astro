@@ -14,11 +14,8 @@
     {
       /*
       Honeypot. Off-screen rather than display:none, which naive bots skip.
-      The field is deliberately NOT called website/url/name/company: password
-      managers fill those on sight and ignore autocomplete="off", and a filled
-      honeypot silently discards a real signup. "subject" matches no autofill
-      heuristic. The wire key stays `website` in subscribe.ts — only the DOM
-      name needs to be unguessable to autofill.
+      Never rename it to website/url/name: password managers fill those and
+      ignore autocomplete="off", and a filled honeypot discards a real signup.
     */
     }
     <div
@@ -146,7 +143,6 @@
       email.removeAttribute('aria-describedby');
     };
 
-    // Only after a failed submit — never on every keystroke.
     email.addEventListener('blur', () => {
       if (!attempted) return;
       if (isValidEmail(email.value)) clearError();

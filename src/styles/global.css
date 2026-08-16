@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
-/* Brand values from the Peach & Olive identity doc and the coming-soon design
-   handoff. Naming rule: family-NNN, higher is darker. */
+/* Peach & Olive brand identity doc. Naming rule: family-NNN, higher is darker. */
 @theme {
   --color-paper-50: #faf7f1;
   --color-paper-100: #f0e9dc;
@@ -24,9 +23,7 @@
 
   --spacing-gutter: clamp(1.5rem, 5vw, 4rem);
   --spacing-section: clamp(4rem, 8vw, 6rem);
-  /* Fluid for the same reason gutter and section are: fixed card padding
-     strangles the content column at narrow widths. */
-  --spacing-card: clamp(1.5rem, 4vw, 4rem); /* 24 → 64 */
+  --spacing-card: clamp(1.5rem, 4vw, 4rem);
 
   --text-display-xl: clamp(2.375rem, 6vw, 3.875rem);
   --text-display-lg: clamp(2rem, 4.5vw, 2.875rem);
@@ -78,11 +75,8 @@
     color: var(--color-olive-700);
   }
 
-  /* The focus ring follows its surface. olive-700 is only 1.61:1 on ink-900,
-     well under the 3:1 that WCAG 1.4.11 wants, so a dark surface re-points the
-     token at peach-300 (5.92:1). Custom properties inherit, so a light island
-     nested in a dark section — the signup card — sets it back and everything
-     inside it is correct without any extra selectors. */
+  /* olive-700 is 1.61:1 on ink-900, under WCAG 1.4.11's 3:1, so surfaces set
+     their own ring colour. Light islands nested in dark sections reset it. */
   :root,
   .bg-paper-50,
   .bg-paper-100,
