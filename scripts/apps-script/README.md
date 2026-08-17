@@ -37,7 +37,13 @@ breaks the live form.
 - The URL is inlined into the client bundle. It is not a secret; it is an env
   var so local development can point at a throwaway sheet.
 - Duplicate addresses return success without a second row. Do not "fix" this —
-  disclosing list membership is the bug.
+  disclosing list membership is the bug. It follows that a duplicate sends no
+  notification either.
+- The notification goes to `Session.getEffectiveUser()`, i.e. whoever owns the
+  script, so there is no address to configure. `MailApp` allows 100 emails a
+  day on a consumer Gmail account; past that it throws, which is caught and
+  logged rather than surfaced. Signups keep working when mail stops — check the
+  Sheet, not the inbox, if you want certainty.
 - Storing `consent` records the exact wording shown to the person at the point
   of submission. That's necessary but not sufficient for GDPR purposes on its
   own — the endpoint is unauthenticated and single-opt-in, so it cannot prove
