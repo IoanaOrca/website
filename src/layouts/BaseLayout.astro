@@ -55,6 +55,26 @@ const releaseTag = import.meta.env.PUBLIC_RELEASE_TAG || 'dev';
       rel="icon"
       href="/favicon.ico"
     />
+
+    {
+      /*
+      GoatCounter. count.js is vendored into public/ rather than loaded from
+      gc.zgo.at, which is a CNAME to BunnyCDN — self-hosting keeps the visitor's
+      IP from reaching a third party just to fetch a static file. Re-download it
+      from https://gc.zgo.at/count.js if GoatCounter changes it.
+
+      The script skips localhost, private ranges and file:, so dev traffic is
+      not counted and needs no guard. It sets no cookies and writes nothing to
+      the device unless a visitor opts out via #toggle-goatcounter, which is why
+      no consent banner is required — see src/pages/privacy.astro.
+    */
+    }
+    <script
+      is:inline
+      data-goatcounter="https://ioana.goatcounter.com/count"
+      async
+      src="/count.js"
+    ></script>
   </head>
   <body>
     <slot />

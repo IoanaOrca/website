@@ -19,7 +19,7 @@ it.
   no employees
 - **Hosting:** GitHub Pages (GitHub, Inc.), US
 - **Signup store:** Google Sheets via an Apps Script endpoint, US
-- **Analytics:** none installed yet — GoatCounter is planned
+- **Analytics:** GoatCounter (hosted), EU — see below
 - **Cookies:** none. No consent banner, no CMP.
 
 ## Done in this pass
@@ -54,17 +54,6 @@ it.
 
 ## Kept deliberately — do not "fix" these
 
-- **The web analytics section (`m263`) stays**, even though no analytics are
-  installed. GoatCounter is coming and the section holds the slot.
-
-  It currently describes profile building, A/B testing, location data, cookies
-  stored up to two years and IP masking. **GoatCounter does none of those** — it
-  is cookieless and stores no IP at all. So when the beacon lands, that body
-  needs replacing wholesale with: cookieless, no persistent identifier stored on
-  the device, aggregate page views and referrers only, legal basis Art. 6(1)(f)
-  legitimate interest, **not** consent. Do not re-add a cookie section for it;
-  it does not need one.
-
 - **The online shop bullet and payment data stay.** No shop and no invoicing
   today, but invoicing is expected eventually.
 
@@ -83,6 +72,62 @@ it.
 
 - **No "Active — Re-certification under Review" status for Meta.** True today,
   stale within months. Plain DPF is enough.
+
+## Analytics: GoatCounter — verified 17 August 2026
+
+Wired into `BaseLayout.astro`, so it runs on every page. Facts checked against
+GoatCounter's own documentation and by reading `count.js`, not recalled:
+
+- **Operator:** GoatCounter, run by Martin Tournoij, Ireland. A sole operator,
+  not a company.
+- **Data location:** Hetzner Online GmbH servers in Finland and Germany — inside
+  the EU. **No third-country transfer, so no DPF or SCCs question arises.** This
+  is the one processor in the stack that needs no transfer basis.
+- **No device storage.** `count.js` only ever _reads_ a `skipgc` key from
+  `localStorage`; it _writes_ one only if a visitor deliberately loads
+  `#toggle-goatcounter` to opt out. Nothing is stored on an ordinary visit, so
+  **§ 25(1) TDDDG is not triggered and no consent banner is required.** That is
+  the fact the banner-free setup rests on — if GoatCounter ever starts writing to
+  the device, the legal position changes and this needs revisiting.
+- **Not stored:** IP address, full User-Agent, tracker ID. Session de-duplication
+  uses an in-memory IP + User-Agent hash held for up to eight hours, replaced by
+  a random string; the mapping never reaches the database.
+- **Legal basis:** Art. 6(1)(f) legitimate interest. **Not** consent.
+
+**`count.js` is vendored into `public/`** rather than loaded from `gc.zgo.at`.
+That host is a CNAME to `goatcounter.b-cdn.net` — BunnyCDN (Datacamp Limited) —
+so loading it from there would hand a visitor's IP to a CDN merely to fetch a
+static file, and would mean naming a second processor in the policy. Self-hosting
+removes both problems.
+
+To update it:
+
+```
+curl -sS https://gc.zgo.at/count.js -o public/count.js
+```
+
+Current version is 9213 bytes,
+sha256 `792b7abd26c1fb6ae62906833e09a301251e2641816e69e4f95aba518f3fe3f0`.
+
+It is excluded from Prettier (`.prettierignore`), ESLint (`eslint.config.mjs`)
+and TypeScript (`tsconfig.json`) — all three, deliberately. Prettier reformatted
+it on the first attempt, which silently rewrote 1.1 KB of vendored code and would
+have made every future diff against upstream unreadable; `astro check` separately
+flagged its deprecated `substr` calls. Do not "tidy" this file.
+
+The `<script>` tag carries `is:inline`. Astro treats a script with attributes as
+inline anyway, but saying so explicitly is what keeps `astro check` quiet and
+documents that the tag is meant to be emitted untouched.
+
+`count.js` skips `localhost`, private ranges and `file:` on its own, so dev
+traffic is not counted and no prod-only guard is needed.
+
+The web analytics section (`m263`) was rewritten to describe this accurately. It
+previously claimed profile building, A/B testing, location data, cookies stored
+up to two years, IP masking and consent as a legal basis — GoatCounter does none
+of those. **Do not restore that generic wording.** `Profiles with user-related
+information` went from the purposes list and the glossary with it, since nothing
+creates profiles.
 
 ## Third-country transfers — verified 17 August 2026
 
