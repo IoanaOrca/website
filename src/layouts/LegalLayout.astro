@@ -5,21 +5,16 @@ import BaseLayout from './BaseLayout.astro';
 interface Props {
   title: string;
   description?: string;
-  /* Long documents only — on a short page a fixed button is just clutter. */
-  backToTop?: boolean;
 }
 
-const { title, description, backToTop = false } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <BaseLayout
   title={title}
   description={description}
 >
-  <header
-    id="top"
-    class="border-b border-paper-200"
-  >
+  <header class="border-b border-paper-200">
     <div
       class="mx-auto flex max-w-page items-center justify-between gap-8 px-gutter pt-8 pb-6"
     >
@@ -36,18 +31,6 @@ const { title, description, backToTop = false } = Astro.props;
       >
     </div>
   </header>
-
-  {
-    backToTop && (
-      <a
-        href="#top"
-        aria-label="Back to top"
-        class="fixed right-6 bottom-6 z-10 rounded-full bg-ink-900 px-5 py-3 text-sm tracking-eyebrow text-paper-50 uppercase no-underline shadow-lg hover:bg-ink-700 hover:text-paper-50"
-      >
-        Back to top
-      </a>
-    )
-  }
 
   <main class="policy mx-auto max-w-3xl px-gutter py-section">
     <slot />
