@@ -7,7 +7,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Privacy Policy — Ioana Orca"
   description="How personal data is handled on ioanaorca.com."
 >
-  <header class="border-b border-paper-200">
+  <header
+    id="top"
+    class="border-b border-paper-200"
+  >
     <div
       class="mx-auto flex max-w-page items-center justify-between gap-8 px-gutter pt-8 pb-6"
     >
@@ -24,6 +27,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       >
     </div>
   </header>
+
+  <a
+    href="#top"
+    aria-label="Back to top"
+    class="fixed right-6 bottom-6 z-10 rounded-full bg-ink-900 px-5 py-3 text-sm tracking-eyebrow text-paper-50 uppercase no-underline shadow-lg hover:bg-ink-700 hover:text-paper-50"
+  >
+    Back to top
+  </a>
 
   <main class="policy mx-auto max-w-3xl px-gutter py-section">
     <h1>Privacy Policy</h1>
@@ -181,7 +192,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </ul>
 
     <h2 id="m3">Controller</h2>
-    <p>Ioana Iordache<br />Willibaldstr. 43C<br />80689 Munich, Germany</p>
+    <p>Ioana Iordache<br />80689 Munich, Germany</p>
     <p>
       Email address: <a href="mailto:ioanaorka@gmail.com">ioanaorka@gmail.com</a
       >

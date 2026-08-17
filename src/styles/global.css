@@ -44,6 +44,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-paper-50);
     color: var(--color-ink-900);
