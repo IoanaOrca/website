@@ -30,6 +30,13 @@ purpose, and a few other things are load-bearing in ways the code doesn't show.
 
 Blocking, and not doable from inside the repo:
 
+- **Redeploy the Apps Script.** `scripts/apps-script/Code.gs` now emails the
+  script owner on each new signup, but the deployed copy predates that — the
+  repo and the live script have diverged. Paste the current file into the
+  editor and Deploy → Manage deployments → **New version** on the existing
+  deployment. Creating a _new_ deployment changes the URL and breaks the live
+  form. The first signup after redeploying will ask you to authorise the
+  `MailApp` scope.
 - **Add `test` to the branch ruleset** — ruleset `20887796` on `main` requires
   `lint`, `check`, `format:check` and `build` by name. Until `test` joins them
   it runs on PRs without blocking merge, so a red test sits beside a green
@@ -71,19 +78,6 @@ Later:
 
 - **Analytics** — Cloudflare Web Analytics (free, cookieless, one script tag) or
   [Umami](https://umami.is) if we need custom events for signup conversions.
-- **Email Ioana on each signup** — right now the only way to know someone
-  signed up is to open the Sheet. `MailApp.sendEmail()` in `doPost` would
-  notify her. Two things to get right:
-  - **Wrap the send in its own `try/catch`.** `MailApp` throws when the daily
-    quota is exhausted (100/day on a consumer Gmail account), and an
-    unhandled throw there would fail the whole request — the subscriber would
-    see the generic error even though their row landed. The notification is
-    the least important thing in that function and must never be able to
-    break the signup.
-  - **Send only when a row is actually appended**, i.e. inside the
-    `indexOf === -1` branch. A duplicate submit writes nothing and a tripped
-    honeypot returns before the sheet is touched at all, so neither should
-    generate mail.
 - **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
   email tool means rewriting the body of `src/lib/subscribe.ts` and changing
   `PUBLIC_SUBSCRIBE_URL`; nothing else.
