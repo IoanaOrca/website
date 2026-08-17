@@ -230,8 +230,14 @@ Deliberately omitted from the page, each for a reason:
 
 - **Keep the datenschutz-generator.de attribution link.** It is a condition of
   the free licence.
-- **Keep the anchor IDs** (`#m716`, `#m3`, `#mOverview`, …). Every ToC entry must
-  resolve to a section that exists — currently 17 anchors, 17 links.
+- **Anchor IDs are semantic slugs** (`#preamble`, `#controller`, `#analytics`, …).
+  The generator's `#m716`/`#m2427` names were renamed once the page was ours to
+  own; nothing external linked to them. Every ToC entry must resolve to a section
+  that exists — currently 17 anchors, 17 links.
+- **External links carry `rel="noopener noreferrer"`.** `noopener` is redundant
+  in current browsers, which apply it to `target="_blank"` implicitly, but
+  `noreferrer` also withholds the referrer — worth having on the one page whose
+  subject is not leaking data.
 - **Prefer adapting existing Schwenke wording** to writing new legal prose. Where
   a section is deleted, delete it; do not paraphrase it into something shorter.
 - **Do not invent facts.** Provider addresses, entity names and DPF status get

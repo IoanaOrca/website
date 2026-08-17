@@ -114,6 +114,11 @@
     'button[type="submit"]',
   );
 
+  // Registered before the guard below: if any id is ever mistyped the guard
+  // skips the real handler, and a form with no action and novalidate would then
+  // GET-submit, putting the address in the URL, history and server logs.
+  form?.addEventListener('submit', (event) => event.preventDefault());
+
   if (
     form &&
     success &&
