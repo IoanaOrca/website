@@ -41,25 +41,16 @@ Blocking, and not doable from inside the repo:
   `lint`, `check`, `format:check` and `build` by name. Until `test` joins them
   it runs on PRs without blocking merge, so a red test sits beside a green
   merge button. Settings → Rules, or `gh api`.
-- **Finish the privacy policy** — the `/privacy` page exists and is linked from
-  the footer, and the policy now names Google (Sheets and Apps Script, the
-  signup store) and GitHub Pages (the host) with their transfer bases. Three
-  gaps remain, all needing facts only Ioana can supply:
-  - No retention period for the signup list. The policy says data is kept
-    "until we transfer it to an email provider or you ask us to erase it",
-    which is honest but open-ended. How long is an address that never converts
-    kept?
-  - The controller is "Ioana Iordache" and the site is "Ioana Orca", with
-    nothing connecting them. A visitor can't tell it's the same person —
-    "Ioana Iordache, trading as Ioana Orca" would fix it.
-  - The policy still describes cookies with a consent management solution,
-    web analytics, a contact form, an online shop and employees. Kept
-    deliberately because analytics are coming, but the cookie section claims a
-    consent mechanism that does not exist — when analytics land, either install
-    a real CMP or narrow that section.
+- **Finish the Impressum** — `src/pages/_imprint.astro` is drafted but excluded
+  from the build (underscore prefix) and missing the postal address § 5 DDG
+  requires. See `docs/privacy-policy-handoff.md` before publishing it.
 
-  Worth knowing before the Kit migration: the stored `consent` string records
-  what the person was _shown_, not that _they_ submitted it. The endpoint is
+  The `/privacy` page was reworked on 17 August 2026 — see
+  `docs/privacy-policy-handoff.md` for what changed and what is still open.
+
+  Worth knowing before the Kit migration: the stored `consent` string is a
+  version marker for the form, not evidence that _they_ submitted it. The
+  endpoint is
   unauthenticated and single-opt-in, so anyone can type someone else's address
   into it. Double opt-in is what actually produces evidence of consent — Kit
   does it natively, but addresses imported from the Sheet will not carry that
