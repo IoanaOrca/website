@@ -1,0 +1,108 @@
+---
+import Footer from '../components/coming-soon/Footer.astro';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /* Long documents only — on a short page a fixed button is just clutter. */
+  backToTop?: boolean;
+}
+
+const { title, description, backToTop = false } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+>
+  <header
+    id="top"
+    class="border-b border-paper-200"
+  >
+    <div
+      class="mx-auto flex max-w-page items-center justify-between gap-8 px-gutter pt-8 pb-6"
+    >
+      <a
+        href="/"
+        class="font-display text-display-sm tracking-[0.01em] text-ink-900 no-underline hover:text-peach-700"
+      >
+        Ioana Orca
+      </a>
+      <a
+        href="/"
+        class="text-sm tracking-eyebrow text-ink-500 uppercase"
+        >Back</a
+      >
+    </div>
+  </header>
+
+  {
+    backToTop && (
+      <a
+        href="#top"
+        aria-label="Back to top"
+        class="fixed right-6 bottom-6 z-10 rounded-full bg-ink-900 px-5 py-3 text-sm tracking-eyebrow text-paper-50 uppercase no-underline shadow-lg hover:bg-ink-700 hover:text-paper-50"
+      >
+        Back to top
+      </a>
+    )
+  }
+
+  <main class="policy mx-auto max-w-3xl px-gutter py-section">
+    <slot />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+{/* Global, not scoped: the content is slotted in, so scoped styles miss it. */}
+<style is:global>
+  .policy h1 {
+    font-family: var(--font-display);
+    font-size: var(--text-display-lg);
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+  }
+
+  .policy h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-display-md);
+    line-height: 1.2;
+    margin-top: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .policy h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-display-xs);
+    line-height: 1.3;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .policy p,
+  .policy li {
+    color: var(--color-ink-700);
+    line-height: 1.75;
+  }
+
+  .policy p {
+    margin-bottom: 1rem;
+  }
+
+  .policy ul {
+    margin: 0 0 1.5rem 1.25rem;
+    list-style: disc;
+  }
+
+  .policy li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem;
+  }
+
+  .policy strong {
+    font-weight: 600;
+    color: var(--color-ink-900);
+  }
+</style>

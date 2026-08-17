@@ -1,98 +1,34 @@
 ---
-import Footer from '../components/coming-soon/Footer.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalLayout from '../layouts/LegalLayout.astro';
 ---
 
-<BaseLayout
+<LegalLayout
   title="Imprint — Ioana Orca"
   description="Legal information for ioanaorca.com."
 >
-  <header
-    id="top"
-    class="border-b border-paper-200"
-  >
-    <div
-      class="mx-auto flex max-w-page items-center justify-between gap-8 px-gutter pt-8 pb-6"
-    >
-      <a
-        href="/"
-        class="font-display text-display-sm tracking-[0.01em] text-ink-900 no-underline hover:text-peach-700"
-      >
-        Ioana Orca
-      </a>
-      <a
-        href="/"
-        class="text-sm tracking-eyebrow text-ink-500 uppercase"
-        >Back</a
-      >
-    </div>
-  </header>
+  <h1>Imprint</h1>
 
-  <main class="policy mx-auto max-w-3xl px-gutter py-section">
-    <h1>Imprint</h1>
+  <p>
+    Information pursuant to § 5 of the German Digital Services Act
+    (Digitale-Dienste-Gesetz, DDG).
+  </p>
 
-    <p>
-      Information pursuant to § 5 of the German Digital Services Act
-      (Digitale-Dienste-Gesetz, DDG).
-    </p>
+  <h2>Responsible for this website</h2>
+  <p>
+    Ioana Iordache, trading as Ioana Orca<br />
+    Sole trader
+  </p>
+  <p><strong>[ADDRESS PENDING — DO NOT PUBLISH THIS PAGE AS IS]</strong></p>
 
-    <h2>Responsible for this website</h2>
-    <p>
-      Ioana Iordache, trading as Ioana Orca<br />
-      Sole trader
-    </p>
-    {
-      /*
-      § 5(1) no. 1 DDG requires the full postal address at which the business is
-      established, and it must be an address where legal process can be served —
-      a PO box or packing station does not satisfy it. Until a real address is
-      set (home address or a c/o business-address service), this page is not
-      compliant and should not be linked publicly. See
-      docs/privacy-policy-handoff.md.
-    */
-    }
-    <p><strong>[ADDRESS PENDING — DO NOT PUBLISH THIS PAGE AS IS]</strong></p>
+  <h2>Contact</h2>
+  <p>
+    Email: <a href="mailto:ioanaorka@gmail.com">ioanaorka@gmail.com</a>
+  </p>
 
-    <h2>Contact</h2>
-    <p>
-      Email: <a href="mailto:ioanaorka@gmail.com">ioanaorka@gmail.com</a>
-    </p>
-
-    <h2>Consumer dispute resolution</h2>
-    <p>
-      We are neither obliged nor willing to participate in dispute resolution
-      proceedings before a consumer arbitration board under the German Act on
-      Alternative Dispute Resolution in Consumer Matters (VSBG).
-    </p>
-  </main>
-
-  <Footer />
-</BaseLayout>
-
-<style>
-  .policy h1 {
-    font-family: var(--font-display);
-    font-size: var(--text-display-lg);
-    line-height: 1.1;
-    margin-bottom: 2.5rem;
-  }
-
-  .policy h2 {
-    font-family: var(--font-display);
-    font-size: var(--text-display-md);
-    line-height: 1.2;
-    margin-top: 3.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .policy p {
-    color: var(--color-ink-700);
-    line-height: 1.75;
-    margin-bottom: 1rem;
-  }
-
-  .policy strong {
-    font-weight: 600;
-    color: var(--color-ink-900);
-  }
-</style>
+  <h2>Consumer dispute resolution</h2>
+  <p>
+    We are neither obliged nor willing to participate in dispute resolution
+    proceedings before a consumer arbitration board under the German Act on
+    Alternative Dispute Resolution in Consumer Matters (VSBG).
+  </p>
+</LegalLayout>

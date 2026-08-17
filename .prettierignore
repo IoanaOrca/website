@@ -1,3 +1,2 @@
-# Vendored third party. Reformatting it would make diffs against upstream
-# useless the next time it is re-downloaded.
-public/count.js
+# Served verbatim, and count.js is vendored third party.
+public/

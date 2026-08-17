@@ -43,18 +43,8 @@ Blocking, and not doable from inside the repo:
   merge button. Settings → Rules, or `gh api`.
 - **Finish the Impressum** — `src/pages/_imprint.astro` is drafted but excluded
   from the build (underscore prefix) and missing the postal address § 5 DDG
-  requires. See `docs/privacy-policy-handoff.md` before publishing it.
-
-  The `/privacy` page was reworked on 17 August 2026 — see
-  `docs/privacy-policy-handoff.md` for what changed and what is still open.
-
-  Worth knowing before the Kit migration: the stored `consent` string is a
-  version marker for the form, not evidence that _they_ submitted it. The
-  endpoint is
-  unauthenticated and single-opt-in, so anyone can type someone else's address
-  into it. Double opt-in is what actually produces evidence of consent — Kit
-  does it natively, but addresses imported from the Sheet will not carry that
-  provenance.
+  requires. `docs/privacy-policy-handoff.md` covers this and the rest of the
+  legal pages.
 
 Needs a decision from Ioana:
 
@@ -67,11 +57,16 @@ Needs a decision from Ioana:
 
 Later:
 
-- **Analytics** — Cloudflare Web Analytics (free, cookieless, one script tag) or
-  [Umami](https://umami.is) if we need custom events for signup conversions.
 - **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
   email tool means rewriting the body of `src/lib/subscribe.ts` and changing
   `PUBLIC_SUBSCRIBE_URL`; nothing else.
+
+  The stored `consent` string is a version marker for the form, not evidence
+  that _they_ submitted it. The endpoint is unauthenticated and single-opt-in,
+  so anyone can type someone else's address into it. Double opt-in is what
+  actually produces evidence of consent — Kit does it natively, but addresses
+  imported from the Sheet will not carry that provenance.
+
 - **Signup form rough edges** — found in review, deliberately deferred because
   each needs a copy or design decision rather than a fix:
   - A server or network failure reuses the invalid-email path, so it sets
