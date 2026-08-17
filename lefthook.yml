@@ -11,6 +11,8 @@ pre-push:
   jobs:
     - name: check
       run: npm run check
+    - name: test
+      run: npm test
 
 commit-msg:
   jobs:

@@ -55,6 +55,20 @@ const releaseTag = import.meta.env.PUBLIC_RELEASE_TAG || 'dev';
       rel="icon"
       href="/favicon.ico"
     />
+
+    {
+      /*
+      count.js is vendored rather than loaded from gc.zgo.at, a CNAME to
+      BunnyCDN, so no third party sees visitor IPs. It skips localhost on its
+      own, so dev needs no guard. See docs/privacy-policy-handoff.md.
+    */
+    }
+    <script
+      is:inline
+      data-goatcounter="https://ioana.goatcounter.com/count"
+      async
+      src="/count.js"
+    ></script>
   </head>
   <body>
     <slot />

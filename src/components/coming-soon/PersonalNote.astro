@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+
+import portrait from '../../assets/images/ioana-portrait-outdoor.jpg';
+---
+
+<section
+  aria-labelledby="hi-im-ioana"
+  class="border-t border-paper-200"
+>
+  <div
+    class="mx-auto grid max-w-page grid-cols-1 items-center gap-18 px-gutter py-section lg:grid-cols-[2fr_3fr]"
+  >
+    <Image
+      src={portrait}
+      alt="Ioana Orca outdoors at sunset"
+      sizes="(min-width: 1024px) 40vw, 100vw"
+      class="aspect-square w-full rounded-card object-cover"
+    />
+    <div>
+      <h2
+        id="hi-im-ioana"
+        class="mb-8 text-display-lg leading-[1.1]"
+      >
+        Hi, I’m Ioana.
+      </h2>
+      <div class="flex max-w-xl flex-col gap-6">
+        <p class="text-lg leading-[1.75] text-ink-700">
+          I know what it feels like to realise that the life you built isn’t
+          necessarily the life you want next.
+        </p>
+        <p class="text-lg leading-[1.75] text-ink-700">
+          I’ve changed countries, careers, relationships, plans and directions.
+          And I’ve learned that understanding yourself isn’t about finding
+          what’s wrong with you.
+        </p>
+        <p
+          class="font-display text-display-md leading-[1.4] text-ink-900 italic"
+        >
+          It’s about understanding yourself well enough to make different
+          choices.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

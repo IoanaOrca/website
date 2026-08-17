@@ -21,7 +21,7 @@ jobs:
       # Report every failure, not just the first.
       fail-fast: false
       matrix:
-        task: [lint, format:check, check, build]
+        task: [lint, format:check, check, test, build]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,3 +33,6 @@ jobs:
       - run: npm ci
       # Runs even though lefthook covers these locally; --no-verify bypasses it.
       - run: npm run ${{ matrix.task }}
+        env:
+          # PRs must not depend on a real endpoint.
+          PUBLIC_SUBSCRIBE_URL: ${{ vars.SUBSCRIBE_URL || 'https://example.invalid/noop' }}

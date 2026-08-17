@@ -11,6 +11,10 @@ export default defineConfig([
     'gitignore',
   ),
 
+  // Served verbatim, and count.js is vendored third party. Committed, so
+  // .gitignore cannot cover it.
+  { ignores: ['public/'] },
+
   js.configs.recommended,
   // Order matters: typescript-eslint sets a global parser, so astro must come
   // after it to claim .astro files. Reversed, every .astro fails to parse.

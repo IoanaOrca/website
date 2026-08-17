@@ -1,0 +1,52 @@
+---
+const steps = [
+  {
+    numeral: '01',
+    title: 'Understand yourself.',
+    body: 'See the patterns, beliefs and perceptions influencing your decisions.',
+  },
+  {
+    numeral: '02',
+    title: 'Get clear.',
+    body: 'Separate what you actually want from what you think you should want.',
+  },
+  {
+    numeral: '03',
+    title: 'Move forward.',
+    body: 'Make a conscious decision and take the next step.',
+  },
+];
+---
+
+<section aria-labelledby="what-you-can-expect">
+  <div class="mx-auto max-w-page px-gutter py-section">
+    <h2
+      id="what-you-can-expect"
+      class="mb-12 text-sm tracking-eyebrow text-ink-500 uppercase"
+    >
+      What you can expect
+    </h2>
+    <ol
+      role="list"
+      class="grid list-none grid-cols-1 gap-px border border-paper-200 bg-paper-200 lg:grid-cols-3"
+    >
+      {
+        steps.map((step) => (
+          <li
+            role="listitem"
+            class="flex flex-col gap-3.5 bg-paper-50 p-10"
+          >
+            <span
+              aria-hidden="true"
+              class="font-display text-display-xs text-peach-700"
+            >
+              {step.numeral}
+            </span>
+            <h3 class="text-display-md leading-[1.2]">{step.title}</h3>
+            <p class="text-base leading-[1.65] text-ink-700">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+
+import heroPortrait from '../../assets/images/ioana-hero-studio.jpg';
+---
+
+<section>
+  <div
+    class="mx-auto grid max-w-page grid-cols-1 items-center gap-18 px-gutter py-section lg:grid-cols-2"
+  >
+    <div>
+      <h1 class="text-display-xl leading-[1.06] tracking-[-0.01em]">
+        <span class="text-ink-900">You know something needs to change.</span>
+        <span class="mt-1.5 block text-peach-700 italic">
+          You’re just not sure what.
+        </span>
+      </h1>
+      <div class="my-11 h-0.5 w-22 bg-peach-300"></div>
+      <p class="max-w-lg text-lg leading-[1.65] text-ink-700">
+        I help women understand what’s keeping them stuck, get clear on what
+        they actually want, and make decisions they feel confident about.
+      </p>
+    </div>
+    <Image
+      src={heroPortrait}
+      alt="Ioana Orca, seated with a laptop against a warm neutral backdrop"
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="aspect-[3/4] w-full rounded-card"
+    />
+  </div>
+</section>

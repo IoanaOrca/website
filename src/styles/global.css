@@ -1,20 +1,40 @@
 @import 'tailwindcss';
 
-/* Colours from the Peach & Olive brand identity doc, v1.0. */
+/* Peach & Olive brand identity doc. Naming rule: family-NNN, higher is darker. */
 @theme {
-  --color-shell: #faf7f1;
-  --color-sand: #f0e9dc;
-  --color-peach-tint: #f2d9c4;
-  /* Surface only — peach text on shell measures 1.8:1 and fails. */
-  --color-peach: #e3b08c;
-  --color-olive: #7e8c7a;
-  --color-olive-deep: #5f6d5b;
-  --color-muted: #6e6c5e;
-  --color-ink: #3a3a33;
+  --color-paper-50: #faf7f1;
+  --color-paper-100: #f0e9dc;
+  --color-paper-200: #e3dccf;
 
-  --container-page: 1240px;
-  --text-eyebrow: clamp(0.6875rem, 1vw, 0.8125rem);
-  --text-eyebrow--letter-spacing: 0.2em;
+  --color-peach-100: #f2d9c4;
+  --color-peach-300: #e3b08c;
+  --color-peach-700: #7a5638;
+
+  /* Reserved for primary CTA backgrounds. Never a fill, accent or link. */
+  --color-olive-600: #5f6d5b;
+  --color-olive-700: #4e5c4a;
+
+  /* ink-500 passes AA on paper-50 only. Use ink-700 on tinted fills. */
+  --color-ink-500: #6e6c5e;
+  --color-ink-700: #4a4a42;
+  --color-ink-900: #3a3a33;
+
+  --container-page: 1440px;
+
+  --spacing-gutter: clamp(1.5rem, 5vw, 4rem);
+  --spacing-section: clamp(4rem, 8vw, 6rem);
+  --spacing-card: clamp(1.5rem, 4vw, 4rem);
+
+  --text-display-xl: clamp(2.375rem, 6vw, 3.875rem);
+  --text-display-lg: clamp(2rem, 4.5vw, 2.875rem);
+  --text-display-md: clamp(1.625rem, 3vw, 2rem);
+  --text-display-sm: clamp(1.5rem, 2.2vw, 1.75rem);
+  --text-display-xs: clamp(1.25rem, 1.6vw, 1.375rem);
+
+  --tracking-eyebrow: 0.22em;
+
+  --radius-card: 3px;
+  --radius-control: 2px;
 }
 
 /* Maps Astro's font variables onto Tailwind's font-* utilities. */
@@ -24,14 +44,19 @@
 }
 
 @layer base {
-  body {
-    background-color: var(--color-shell);
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 1.2vw, 1.125rem);
-    line-height: 1.75;
+  html {
+    scroll-behavior: smooth;
   }
 
+  body {
+    background-color: var(--color-paper-50);
+    color: var(--color-ink-900);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  /* No sizes here: the page uses five display steps and components pick one. */
   h1,
   h2,
   h3,
@@ -40,28 +65,36 @@
   h6 {
     font-family: var(--font-display);
     font-weight: 400;
-  }
-
-  h1 {
-    font-size: clamp(4rem, 7vw, 5.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-  }
-
-  h2 {
-    font-size: clamp(2.25rem, 4vw, 2.75rem);
-    line-height: 1.15;
+    text-wrap: pretty;
   }
 
   a {
-    color: var(--color-olive-deep);
+    color: var(--color-peach-700);
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--color-olive-700);
+  }
+
+  /* olive-700 is 1.61:1 on ink-900, under WCAG 1.4.11's 3:1, so surfaces set
+     their own ring colour. Light islands nested in dark sections reset it. */
+  :root,
+  .bg-paper-50,
+  .bg-paper-100,
+  .bg-peach-100 {
+    --focus-ring: var(--color-olive-700);
+  }
+
+  .bg-ink-900 {
+    --focus-ring: var(--color-peach-300);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-olive-deep);
-    outline-offset: 2px;
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
