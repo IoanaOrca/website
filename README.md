@@ -28,45 +28,12 @@ Before changing the coming-soon page, read **Decisions that look like bugs** in
 `CLAUDE.md` — duplicate signups return success on purpose, the input is 16px on
 purpose, and a few other things are load-bearing in ways the code doesn't show.
 
-Blocking, and not doable from inside the repo:
-
-- **Redeploy the Apps Script.** `scripts/apps-script/Code.gs` now emails the
-  script owner on each new signup, but the deployed copy predates that — the
-  repo and the live script have diverged. Paste the current file into the
-  editor and Deploy → Manage deployments → **New version** on the existing
-  deployment. Creating a _new_ deployment changes the URL and breaks the live
-  form. The first signup after redeploying will ask you to authorise the
-  `MailApp` scope.
-- **Add `test` to the branch ruleset** — ruleset `20887796` on `main` requires
-  `lint`, `check`, `format:check` and `build` by name. Until `test` joins them
-  it runs on PRs without blocking merge, so a red test sits beside a green
-  merge button. Settings → Rules, or `gh api`.
-- **Finish the Impressum** — `src/pages/_imprint.astro` is drafted but excluded
-  from the build (underscore prefix) and missing the postal address § 5 DDG
-  requires. `docs/privacy-policy-handoff.md` covers this and the rest of the
-  legal pages.
-
-Needs a decision from Ioana:
-
-- **Copy outside the approved set** — two strings on the page were never in the
-  client-approved brief: `Something went wrong. Please try again.` (the brief
-  specified no server-error state) and `First name (optional)` (the field was
-  added later). The `(optional)` half is load-bearing, not decoration — without
-  it people assume the field is required, which is the friction the optional
-  field exists to avoid. Reword freely, but keep the optionality visible.
-
 Later:
 
-- **Migrate to Kit** — signups currently land in a Sheet. Moving to a real
-  email tool means rewriting the body of `src/lib/subscribe.ts` and changing
-  `PUBLIC_SUBSCRIBE_URL`; nothing else.
-
-  The stored `consent` string is a version marker for the form, not evidence
-  that _they_ submitted it. The endpoint is unauthenticated and single-opt-in,
-  so anyone can type someone else's address into it. Double opt-in is what
-  actually produces evidence of consent — Kit does it natively, but addresses
-  imported from the Sheet will not carry that provenance.
-
+- **Finish the Impressum** — waiting on the business registration, since § 5 DDG
+  wants the registered postal address. `src/pages/_imprint.astro` is drafted but
+  excluded from the build (underscore prefix) until that address exists.
+  `docs/privacy-policy-handoff.md` covers this and the rest of the legal pages.
 - **Signup form rough edges** — found in review, deliberately deferred because
   each needs a copy or design decision rather than a fix:
   - A server or network failure reuses the invalid-email path, so it sets
@@ -80,11 +47,6 @@ Later:
   - The card collapses from ~500px to ~190px when it swaps to the success
     state, yanking the footer up under whoever is reading the confirmation. A
     `min-h` holds the space.
-  - The six-way null guard around the DOM lookups silently skips attaching all
-    listeners if an id is ever mistyped. The form has no `action` and uses
-    `novalidate`, so a submit would then fall through to a default GET reload
-    with the email in the query string. Registering an unconditional
-    `preventDefault` before the guard is cheap insurance.
 - **Social preview** — `src/layouts/BaseLayout.astro` has no `og:*` or
   `twitter:card` tags, so the page currently pastes as a bare URL with no
   image, title or description. Its only distribution channel is an Instagram
