@@ -1,8 +1,16 @@
-<div class="rounded-card bg-paper-50 p-card">
+{
+  /*
+  Both states share one grid cell, so the card is always as tall as the form
+  and swapping in the confirmation cannot collapse it. The form is hidden with
+  `invisible` rather than `hidden` for the same reason: it has to keep
+  occupying the cell.
+*/
+}
+<div class="grid rounded-card bg-paper-50 p-card">
   <form
     id="signup"
     novalidate
-    class="flex flex-col gap-4.5"
+    class="col-start-1 row-start-1 flex flex-col gap-4.5"
   >
     <h3 class="font-display text-display-md leading-[1.2]">
       Want to know when it’s live?
@@ -73,12 +81,31 @@
     >
       Join the list
     </button>
+
+    {
+      /*
+      Request status, as opposed to field status: what the server did, not what
+      the address looks like. sr-only while empty keeps it out of flow, so it
+      adds no gap to the flex column until it has something visible to say.
+    */
+    }
+    <p
+      id="signup-status"
+      role="status"
+      class="sr-only text-sm text-peach-700"
+    >
+    </p>
   </form>
 
+  {
+    /*
+    Centred, not top-aligned: the grid cell is as tall as the form, so the
+    leftover space reads as whitespace rather than a truncated card.
+  */
+  }
   <div
     id="signup-success"
-    hidden
-    class="flex flex-col gap-4"
+    class="invisible col-start-1 row-start-1 flex flex-col justify-center gap-4"
   >
     <h3
       id="signup-success-heading"
@@ -88,7 +115,7 @@
       You’re on the list.
     </h3>
     <p class="text-base text-ink-700">
-      I’ll be in touch when the website opens.
+      I’ll be in touch when the website opens — autumn 2026.
     </p>
   </div>
 </div>
@@ -100,6 +127,7 @@
 
   const INVALID_MESSAGE = 'That doesn’t look like an email address.';
   const FAILURE_MESSAGE = 'Something went wrong. Please try again.';
+  const PENDING_MESSAGE = 'Sending…';
 
   const form = document.querySelector<HTMLFormElement>('#signup');
   const success = document.querySelector<HTMLElement>('#signup-success');
@@ -110,6 +138,7 @@
   const firstName = document.querySelector<HTMLInputElement>('#first-name');
   const honeypot = document.querySelector<HTMLInputElement>('#subject');
   const error = document.querySelector<HTMLElement>('#email-error');
+  const status = document.querySelector<HTMLElement>('#signup-status');
   const button = form?.querySelector<HTMLButtonElement>(
     'button[type="submit"]',
   );
@@ -127,6 +156,7 @@
     firstName &&
     honeypot &&
     error &&
+    status &&
     button
   ) {
     let attempted = false;
@@ -145,6 +175,15 @@
       email.removeAttribute('aria-describedby');
     };
 
+    // Announced by the live region either way; `visible` only decides whether
+    // sighted users see it, since the button already reads Sending….
+    const setStatus = (message: string, visible: boolean) => {
+      status.textContent = message;
+      status.classList.toggle('sr-only', !visible);
+    };
+
+    const clearStatus = () => setStatus('', false);
+
     email.addEventListener('blur', () => {
       if (!attempted) return;
       if (isValidEmail(email.value)) clearError();
@@ -157,13 +196,15 @@
 
       if (!isValidEmail(email.value)) {
         showError(INVALID_MESSAGE);
+        clearStatus();
         email.focus();
         return;
       }
 
       clearError();
+      setStatus(PENDING_MESSAGE, false);
       button.disabled = true;
-      button.textContent = 'Sending…';
+      button.textContent = PENDING_MESSAGE;
 
       const result = await subscribe(PUBLIC_SUBSCRIBE_URL, {
         email: email.value,
@@ -172,18 +213,32 @@
       });
 
       if (result.ok) {
-        form.hidden = true;
-        success.hidden = false;
-        // Focus would otherwise be orphaned on a button that no longer exists.
+        // Left visible, a failure message would keep padding the grid row.
+        clearStatus();
+        form.classList.add('invisible');
+        success.classList.remove('invisible');
+        // Only once it is visible: a hidden subtree refuses focus outright.
         heading.focus();
         return;
       }
 
       button.disabled = false;
       button.textContent = 'Join the list';
-      showError(
-        result.reason === 'invalid' ? INVALID_MESSAGE : FAILURE_MESSAGE,
-      );
+
+      if (result.reason === 'invalid') {
+        showError(INVALID_MESSAGE);
+        clearStatus();
+        email.focus();
+        return;
+      }
+
+      // A dead network says nothing about the address, so the field keeps its
+      // valid state and the message goes to the region that owns the request.
+      setStatus(FAILURE_MESSAGE, true);
+      // Disabling the button dropped focus to <body> if it was the thing
+      // focused; submitting with Enter leaves focus in the input, so restoring
+      // it unconditionally would move someone who never left the field.
+      if (document.activeElement === document.body) button.focus();
     });
   }
 </script>

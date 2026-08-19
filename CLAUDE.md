@@ -31,6 +31,24 @@ shouldn't. Each has bitten at least once.
 - **`subscribe()` takes the endpoint as its first argument** rather than
   importing `astro:env/client`. That is what keeps the module pure and its unit
   tests free of Astro's Vite plugin.
+- **A failed request is not a field error.** `#signup-status` (`role="status"`)
+  owns network and server failures; `#email-error` owns only what is wrong with
+  the address. Routing a dead network through `showError` flags a perfectly good
+  address as `aria-invalid`. `reason: 'invalid'` is the exception — the Apps
+  Script validates too, so that one really is a field error. The form carries no
+  `aria-busy`: on the form element it would suppress the `Sending…` announcement
+  the status region exists to make.
+- **The signup card is a grid with both states in one cell, and the form hides
+  with `invisible`, not `hidden`.** `hidden` collapses the card from 405px to
+  119px, and the card sits near the bottom of a 5600px page, so the shrink drops
+  `maxScroll` below the current offset and the browser clamps it — the viewport
+  lurches ~160px while `heading.focus()` runs, animated by the global
+  `scroll-behavior: smooth`. Reveal the success state _before_ focusing its
+  heading; a hidden subtree refuses focus outright.
+- **`button.focus()` after a failure is guarded by
+  `document.activeElement === document.body`.** Disabling the button drops focus
+  to `<body>`, but submitting with Enter leaves focus in the input — restoring it
+  unconditionally would move someone who never left the field.
 - **Lists that lose their bullets carry an explicit `role="list"`.** Safari
   strips list semantics when `list-style: none` is applied, and the numerals in
   "What you can expect" are `aria-hidden` on the assumption the list conveys
