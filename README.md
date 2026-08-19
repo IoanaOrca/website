@@ -30,7 +30,7 @@ Before changing the coming-soon page, read **Decisions that look like bugs** in
 - **Finish the Impressum** — `src/pages/_imprint.astro` is drafted but excluded
   from the build (underscore prefix) until the business is registered and § 5 DDG
   has a postal address to name.
-- **Social preview** — `src/layouts/BaseLayout.astro` has no `og:*` or
-  `twitter:card` tags, so the page pastes as a bare URL with no image, title or
-  description. Its only distribution channel is an Instagram bio link, so that
-  costs clicks on the one thing the page exists to do.
+- **Social preview image** — the `og:*` tags are in place but `public/og.jpg`
+  does not exist, so a pasted link previews without an image. Needs a 1200x630
+  JPEG under roughly 300 KB, at that exact path, and `ogImageAlt` in
+  `src/layouts/BaseLayout.astro` updated if the artwork says something else.

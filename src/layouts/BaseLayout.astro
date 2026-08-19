@@ -9,6 +9,12 @@ interface Props {
 
 const { title, description } = Astro.props;
 const releaseTag = import.meta.env.PUBLIC_RELEASE_TAG || 'dev';
+
+// Crawlers reject relative URLs, so both are resolved against `site`.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.jpg', Astro.site).href;
+// Describes the image itself, not the page. Update it if the image changes.
+const ogImageAlt = 'Ioana Orca — coaching for your next chapter.';
 ---
 
 <html lang="en">
@@ -36,6 +42,58 @@ const releaseTag = import.meta.env.PUBLIC_RELEASE_TAG || 'dev';
         />
       )
     }
+
+    <link
+      rel="canonical"
+      href={canonical}
+    />
+
+    <meta
+      property="og:type"
+      content="website"
+    />
+    <meta
+      property="og:site_name"
+      content="Ioana Orca"
+    />
+    <meta
+      property="og:url"
+      content={canonical}
+    />
+    <meta
+      property="og:title"
+      content={title}
+    />
+    {
+      description && (
+        <meta
+          property="og:description"
+          content={description}
+        />
+      )
+    }
+    <meta
+      property="og:image"
+      content={ogImage}
+    />
+    {
+      /*
+      Stated so crawlers that never fetch the file still lay out the card.
+      They must match public/og.jpg.
+    */
+    }
+    <meta
+      property="og:image:width"
+      content="1200"
+    />
+    <meta
+      property="og:image:height"
+      content="630"
+    />
+    <meta
+      property="og:image:alt"
+      content={ogImageAlt}
+    />
 
     <Font
       cssVariable="--internal-font-display"
