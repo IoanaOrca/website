@@ -22,36 +22,6 @@ it.
 - **Analytics:** GoatCounter (hosted), EU — see below
 - **Cookies:** none. No consent banner, no CMP.
 
-## Done in this pass
-
-- **Removed the log-retention claim.** The policy used to promise log files were
-  erased or anonymised after 30 days. That was false: the logs are GitHub's, and
-  the controller cannot read, configure or delete them. The GitHub Pages bullet
-  now says exactly that, and that retention is GitHub's to determine.
-- **Deleted the cookie section** (`m134`) including the consent-management
-  sub-module. No cookies are set and there is no CMP, so the section promised a
-  withdrawal control that did not exist. The ToC entry went with it, as did the
-  cross-reference to it from the web analytics section.
-- **Deleted "Promotional communication via email, post, fax or telephone"**
-  (`m638`). It duplicated the newsletter section and offered to fax people. The
-  `Marketing` and `Sales promotion` purposes went with it, since nothing else
-  used them.
-- **Trimmed the overview lists** of employee data, employees, whistleblowers and
-  whistleblower protection, plus the `Employees` glossary entry.
-- **Narrowed "Contact form" to "Contact by email".** There is no contact form,
-  only a `mailto:` in the footer.
-- **Named BayLDA** (Promenade 18, 91522 Ansbach) as the competent supervisory
-  authority in the complaint-rights bullet.
-- **Fixed the consent-marker sentence.** It claimed to store "a marker recording
-  the wording of the consent shown at the time." No wording is shown anywhere.
-  It now describes what is actually stored: a version marker identifying the
-  sign-up form as it stood.
-- **Added a retention criterion** for the signup list (see below).
-- **Dropped the `workspace.google.com` link.** The account is a free consumer
-  Gmail account, not Workspace.
-- **Removed usage data** from the newsletter data types. Nothing tracks opens or
-  clicks, and no sending tool is in use.
-
 ## Kept deliberately — do not "fix" these
 
 - **The online shop bullet and payment data stay.** No shop and no invoicing
