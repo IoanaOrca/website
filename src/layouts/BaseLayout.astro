@@ -94,20 +94,15 @@ const ogImage = new URL('/og.jpg', Astro.site).href;
 
     <link
       rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
-    <link
-      rel="icon"
       href="/favicon.ico"
     />
 
     {
       /*
-      count.js is vendored rather than loaded from gc.zgo.at, a CNAME to
-      BunnyCDN, so no third party sees visitor IPs. It skips localhost on its
-      own, so dev needs no guard. See docs/privacy-policy-handoff.md.
-    */
+        count.js is vendored rather than loaded from gc.zgo.at, a CNAME to
+        BunnyCDN, so no third party sees visitor IPs. It skips localhost on its
+        own, so dev needs no guard. See docs/privacy-policy-handoff.md.
+      */
     }
     <script
       is:inline
