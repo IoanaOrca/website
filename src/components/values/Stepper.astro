@@ -1,0 +1,163 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div
+  data-stepper
+  class="mx-auto max-w-[42rem] px-gutter py-section"
+>
+  {
+    /* Filled in by the script, so nothing shows a wrong count before it runs. */
+  }
+  <div
+    data-progress
+    class="invisible mb-12 flex flex-col gap-3"
+  >
+    <div class="flex items-baseline justify-between gap-4">
+      <h1 class="text-sm tracking-eyebrow text-ink-500 uppercase">{title}</h1>
+      <p
+        data-progress-label
+        class="text-sm text-ink-500"
+      >
+      </p>
+    </div>
+    <div
+      aria-hidden="true"
+      class="h-1 rounded-full bg-paper-200"
+    >
+      <div
+        data-progress-bar
+        class="h-full rounded-full bg-peach-700 transition-[width] duration-300"
+      >
+      </div>
+    </div>
+  </div>
+
+  <slot />
+
+  <nav
+    data-nav
+    aria-label="Steps"
+    class="invisible mt-14 flex items-center justify-between gap-4"
+  >
+    <button
+      type="button"
+      data-back
+      class="py-4 text-sm font-semibold tracking-[0.14em] text-ink-700 uppercase underline underline-offset-4"
+    >
+      Back
+    </button>
+    <button
+      type="button"
+      data-next
+      class="rounded-control bg-olive-600 px-10 py-4 text-sm font-semibold tracking-[0.14em] text-paper-50 uppercase transition-[background-color] duration-150 hover:bg-olive-700"
+    >
+      Next
+    </button>
+  </nav>
+</div>
+
+<script>
+  import { resolveStep, stepHash } from '../../lib/steps';
+
+  const UNLOCKED_KEY = 'values-unlocked';
+
+  const readUnlocked = () => {
+    try {
+      return localStorage.getItem(UNLOCKED_KEY) === '1';
+    } catch {
+      return false;
+    }
+  };
+
+  const writeUnlocked = () => {
+    try {
+      localStorage.setItem(UNLOCKED_KEY, '1');
+    } catch {
+      // Private mode or blocked storage: the gate comes back next visit.
+    }
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-stepper]');
+  const steps = [...(root?.querySelectorAll<HTMLElement>('[data-step]') ?? [])];
+  const progress = root?.querySelector<HTMLElement>('[data-progress]');
+  const label = root?.querySelector<HTMLElement>('[data-progress-label]');
+  const bar = root?.querySelector<HTMLElement>('[data-progress-bar]');
+  const nav = root?.querySelector<HTMLElement>('[data-nav]');
+  const back = root?.querySelector<HTMLButtonElement>('[data-back]');
+  const next = root?.querySelector<HTMLButtonElement>('[data-next]');
+
+  if (root && steps.length && progress && label && bar && nav && back && next) {
+    const gate = steps.findIndex((step) => step.hasAttribute('data-gate'));
+    let unlocked = readUnlocked();
+
+    if (unlocked)
+      root.querySelector('#signup-card')?.setAttribute('data-done', '');
+
+    const current = () =>
+      resolveStep(location.hash, { count: steps.length, gate, unlocked });
+
+    // moveFocus marks a real step change; only those scroll, animate and
+    // move focus.
+    const render = (index: number, moveFocus: boolean) => {
+      const update = () => {
+        steps.forEach((step, i) => (step.hidden = i !== index));
+        label.textContent = `Step ${index + 1} of ${steps.length}`;
+        bar.style.width = `${((index + 1) / steps.length) * 100}%`;
+        back.classList.toggle('invisible', index === 0);
+        next.classList.toggle(
+          'invisible',
+          index === steps.length - 1 || (index === gate && !unlocked),
+        );
+        // Instant, overriding the global smooth scroll, so the new snapshot
+        // is taken at the top.
+        if (moveFocus) window.scrollTo({ top: 0, behavior: 'instant' });
+      };
+      const focus = () =>
+        steps[index]
+          .querySelector<HTMLElement>('h2')
+          ?.focus({ preventScroll: true });
+
+      if (!moveFocus) return update();
+      if (!document.startViewTransition) {
+        update();
+        return focus();
+      }
+      // Focus only once the transition is done; the old step is a snapshot
+      // until then.
+      document.startViewTransition(update).finished.finally(focus);
+    };
+
+    // Rewrites a hash the visitor may not see (out of range, past the gate)
+    // without adding a history entry.
+    const show = (moveFocus: boolean) => {
+      const index = current();
+      if (location.hash !== stepHash(index))
+        history.replaceState(null, '', stepHash(index));
+      render(index, moveFocus);
+    };
+
+    back.addEventListener('click', () => {
+      location.hash = stepHash(current() - 1);
+    });
+    next.addEventListener('click', () => {
+      location.hash = stepHash(current() + 1);
+    });
+    window.addEventListener('hashchange', () => show(true));
+
+    // No auto-advance: the form has just moved focus to its success heading.
+    root.addEventListener('signup:success', () => {
+      unlocked = true;
+      writeUnlocked();
+      render(current(), false);
+    });
+
+    show(false);
+    progress.classList.remove('invisible');
+    nav.classList.remove('invisible');
+  }
+</script>

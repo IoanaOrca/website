@@ -1,0 +1,80 @@
+---
+import SignupForm from '../components/SignupForm.astro';
+import Footer from '../components/coming-soon/Footer.astro';
+import Header from '../components/coming-soon/Header.astro';
+import Step from '../components/values/Step.astro';
+import Stepper from '../components/values/Stepper.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+{/* PLACEHOLDER COPY — replace with Ioana’s approved text before merge. */}
+<BaseLayout
+  title="Find your values — Ioana Orca"
+  description="A short pen-and-paper exercise to find the values behind your decisions."
+>
+  <Header />
+  <main>
+    <Stepper title="Find your values">
+      <Step
+        first
+        title="What matters to you?"
+      >
+        <p>
+          This exercise takes about twenty minutes. You’ll need a pen and a
+          sheet of paper — nothing you write goes anywhere but your page.
+        </p>
+      </Step>
+
+      <Step
+        gate
+        title="Before we start"
+      >
+        <SignupForm
+          source="values-quiz"
+          firstName={false}
+          heading="Join Ioana’s list to continue"
+          successHeading="You’re on the list."
+          successText="Tap Next to begin."
+          class="border border-paper-200"
+        />
+      </Step>
+
+      <Step title="Remember a good moment">
+        <p>
+          Write down three moments when you felt most like yourself. Where were
+          you, who was there, what were you doing?
+        </p>
+      </Step>
+
+      <Step title="Name what was there">
+        <p>
+          For each moment, write the words that describe what made it good —
+          freedom, closeness, learning, calm…
+        </p>
+      </Step>
+
+      <Step title="Choose five">
+        <p>
+          Look at every word on your page. Circle the five that feel truest.
+          Cross out the rest.
+        </p>
+      </Step>
+
+      <Step title="Your values">
+        <p>
+          The five words you circled are a starting point. Keep the page
+          somewhere you’ll see it.
+        </p>
+        <p>
+          <a
+            href="https://instagram.com/ioanaorca"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Follow along on Instagram — @ioanaorca</a
+          >
+        </p>
+      </Step>
+    </Stepper>
+  </main>
+  <Footer />
+</BaseLayout>
