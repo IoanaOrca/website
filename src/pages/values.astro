@@ -15,10 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <Header />
   <main>
     <Stepper title="Find your values">
-      <Step
-        first
-        title="What matters to you?"
-      >
+      <Step title="What matters to you?">
         <p>
           This exercise takes about twenty minutes. You’ll need a pen and a
           sheet of paper — nothing you write goes anywhere but your page.
@@ -26,12 +23,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </Step>
 
       <Step
-        gate
+        hidden
         title="Before we start"
       >
         <SignupForm
           source="values-quiz"
-          firstName={false}
+          showFirstName={false}
           heading="Join Ioana’s list to continue"
           successHeading="You’re on the list."
           successText="Tap Next to begin."
@@ -39,28 +36,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         />
       </Step>
 
-      <Step title="Remember a good moment">
+      <Step
+        hidden
+        title="Remember a good moment"
+      >
         <p>
           Write down three moments when you felt most like yourself. Where were
           you, who was there, what were you doing?
         </p>
       </Step>
 
-      <Step title="Name what was there">
+      <Step
+        hidden
+        title="Name what was there"
+      >
         <p>
           For each moment, write the words that describe what made it good —
           freedom, closeness, learning, calm…
         </p>
       </Step>
 
-      <Step title="Choose five">
+      <Step
+        hidden
+        title="Choose five"
+      >
         <p>
           Look at every word on your page. Circle the five that feel truest.
           Cross out the rest.
         </p>
       </Step>
 
-      <Step title="Your values">
+      <Step
+        hidden
+        title="Your values"
+      >
         <p>
           The five words you circled are a starting point. Keep the page
           somewhere you’ll see it.

@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 
 import { moveStep, resolveStep, stepHash } from './steps';
 
-const locked = { count: 6, gate: 1, unlocked: false };
-const unlocked = { ...locked, unlocked: true };
+const locked = { count: 6, gate: 1, isUnlocked: false };
+const unlocked = { ...locked, isUnlocked: true };
 
 describe('stepHash', () => {
   it('is 1-based', () => {
@@ -48,7 +48,7 @@ describe('resolveStep', () => {
 
   it('does not clamp when there is no gate', () => {
     expect(
-      resolveStep('#step-4', { count: 6, gate: -1, unlocked: false }),
+      resolveStep('#step-4', { count: 6, gate: -1, isUnlocked: false }),
     ).toBe(3);
   });
 });

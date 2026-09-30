@@ -1,7 +1,7 @@
 ---
 interface Props {
   source: string;
-  firstName?: boolean;
+  showFirstName?: boolean;
   heading?: string;
   successHeading?: string;
   successText?: string;
@@ -10,7 +10,7 @@ interface Props {
 
 const {
   source,
-  firstName = true,
+  showFirstName = true,
   heading = 'Want to know when it’s live?',
   successHeading = 'You’re on the list.',
   successText = 'I’ll be in touch when the website opens — autumn 2026.',
@@ -63,7 +63,7 @@ const {
     </div>
 
     {
-      firstName && (
+      showFirstName && (
         <>
           <label
             for="first-name"
@@ -190,7 +190,7 @@ const {
     status &&
     button
   ) {
-    let attempted = false;
+    let hasAttempted = false;
 
     const showError = (message: string) => {
       error.textContent = message;
@@ -216,14 +216,14 @@ const {
     const clearStatus = () => setStatus('', false);
 
     email.addEventListener('blur', () => {
-      if (!attempted) return;
+      if (!hasAttempted) return;
       if (isValidEmail(email.value)) clearError();
       else showError(INVALID_MESSAGE);
     });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      attempted = true;
+      hasAttempted = true;
 
       if (!isValidEmail(email.value)) {
         showError(INVALID_MESSAGE);

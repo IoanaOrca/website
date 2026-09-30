@@ -1,17 +1,15 @@
 ---
 interface Props {
   title: string;
-  first?: boolean;
-  gate?: boolean;
+  hidden?: boolean;
 }
 
-const { title, first = false, gate = false } = Astro.props;
+const { title, hidden = false } = Astro.props;
 ---
 
 <section
   data-step
-  data-gate={gate ? '' : undefined}
-  hidden={!first}
+  hidden={hidden}
   class="flex flex-col gap-8"
 >
   <h2
