@@ -2,6 +2,8 @@
 
 /* Peach & Olive brand identity doc. Naming rule: family-NNN, higher is darker. */
 @theme {
+  /* Card surface, lighter than the page. */
+  --color-paper-25: #fffdf9;
   --color-paper-50: #faf7f1;
   --color-paper-100: #f0e9dc;
   --color-paper-200: #e3dccf;
@@ -14,7 +16,8 @@
   --color-olive-600: #5f6d5b;
   --color-olive-700: #4e5c4a;
 
-  /* ink-500 passes AA on paper-50 only. Use ink-700 on tinted fills. */
+  /* ink-500 passes AA on paper-50 and paper-25 only. Use ink-700 on tinted
+     fills. */
   --color-ink-500: #6e6c5e;
   --color-ink-700: #4a4a42;
   --color-ink-900: #3a3a33;
@@ -24,17 +27,22 @@
   --spacing-gutter: clamp(1.5rem, 5vw, 4rem);
   --spacing-section: clamp(4rem, 8vw, 6rem);
   --spacing-card: clamp(1.5rem, 4vw, 4rem);
+  --spacing-step: clamp(1.375rem, 3.5vw, 2.75rem);
 
   --text-display-xl: clamp(2.375rem, 6vw, 3.875rem);
   --text-display-lg: clamp(2rem, 4.5vw, 2.875rem);
   --text-display-md: clamp(1.625rem, 3vw, 2rem);
   --text-display-sm: clamp(1.5rem, 2.2vw, 1.75rem);
   --text-display-xs: clamp(1.25rem, 1.6vw, 1.375rem);
+  --text-label: 0.8125rem;
 
   --tracking-eyebrow: 0.22em;
 
   --radius-card: 3px;
   --radius-control: 2px;
+
+  --shadow-card:
+    0 1px 0 rgb(58 58 51 / 0.03), 0 18px 40px -28px rgb(122 86 56 / 0.28);
 }
 
 /* Maps Astro's font variables onto Tailwind's font-* utilities. */
@@ -82,6 +90,7 @@
   /* olive-700 is 1.61:1 on ink-900, under WCAG 1.4.11's 3:1, so surfaces set
      their own ring colour. Light islands nested in dark sections reset it. */
   :root,
+  .bg-paper-25,
   .bg-paper-50,
   .bg-paper-100,
   .bg-peach-100 {
@@ -90,6 +99,34 @@
 
   .bg-ink-900 {
     --focus-ring: var(--color-peach-300);
+  }
+
+  /* Styled through its pseudo-elements: Safari ignores accent-color here. */
+  progress {
+    appearance: none;
+    border: 0;
+    border-radius: var(--radius-control);
+    overflow: hidden;
+    background-color: var(--color-paper-200);
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: var(--color-paper-200);
+  }
+
+  progress::-webkit-progress-value {
+    background-color: var(--color-peach-700);
+  }
+
+  progress::-moz-progress-bar {
+    background-color: var(--color-peach-700);
+  }
+
+  /* The global reduced-motion reset does not reach this pseudo-element. */
+  @media (prefers-reduced-motion: no-preference) {
+    progress::-webkit-progress-value {
+      transition: width 300ms;
+    }
   }
 
   :focus-visible {
@@ -105,6 +142,12 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
     }
   }
 }

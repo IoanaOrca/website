@@ -153,7 +153,7 @@ does not want her home address published, which leaves two routes:
    addressless Impressum is indefensible.
 
 Route 2 is the current state. The footer link is one
-`<a href="/imprint">Imprint</a>` in `src/components/coming-soon/Footer.astro`
+`<a href="/imprint">Imprint</a>` in `src/components/Footer.astro`
 beside the privacy link.
 
 Deliberately omitted from the page, each for a reason:

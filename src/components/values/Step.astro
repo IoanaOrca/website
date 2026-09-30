@@ -1,0 +1,66 @@
+---
+interface Props {
+  title: string;
+  hidden?: boolean;
+  /* Counts towards "Question X of N", gets a quieter title and lines to write
+     answers on. */
+  isQuestion?: boolean;
+  /* For the opening step only. */
+  hasLargeTitle?: boolean;
+  /* Replaces the Next button's text while this step is showing. */
+  nextLabel?: string;
+}
+
+const {
+  title,
+  hidden = false,
+  isQuestion = false,
+  hasLargeTitle = false,
+  nextLabel,
+} = Astro.props;
+---
+
+<section
+  data-step
+  data-question={isQuestion ? '' : undefined}
+  data-next-label={nextLabel}
+  hidden={hidden}
+  class:list={[
+    'flex flex-col gap-4.5 pt-7 pb-10 text-lg leading-[1.65] text-pretty md:pt-10',
+    isQuestion ? 'text-ink-700' : 'text-ink-900',
+  ]}
+>
+  <h2
+    tabindex="-1"
+    class:list={isQuestion
+      ? 'mb-0.5 text-display-xs leading-[1.2] text-peach-700 italic'
+      : [
+          'mb-1.5 leading-[1.06] text-balance text-ink-900',
+          hasLargeTitle ? 'text-display-xl' : 'text-display-lg',
+        ]}
+  >
+    {
+      /* Filled in by the Stepper, so focusing the heading announces position. */
+    }
+    <span
+      data-step-position
+      class="sr-only"
+    ></span>
+    {title}
+  </h2>
+  <slot />
+  {
+    isQuestion && (
+      <div
+        aria-hidden="true"
+        class="mt-2.5 flex flex-col"
+      >
+        {[1, 2, 3].map((n) => (
+          <div class="flex h-13 items-end border-b border-paper-200 pb-2 text-sm text-ink-500 tabular-nums">
+            {n}.
+          </div>
+        ))}
+      </div>
+    )
+  }
+</section>
