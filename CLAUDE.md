@@ -12,8 +12,8 @@ make that one and say what you left out.
 - Add tooling layers when there is code that needs them, not before.
 - Comments explain why something non-obvious is the way it is. Default to none.
 - Booleans read as yes/no questions: `isUnlocked`, `hasAttempted`,
-  `showFirstName`. Component props that mirror an HTML attribute keep its name
-  (`hidden`, `disabled`).
+  `showFirstNameField`. Component props that mirror an HTML attribute keep its
+  name (`hidden`, `disabled`).
 
 ## Decisions that look like bugs
 

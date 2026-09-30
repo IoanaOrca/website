@@ -1,19 +1,20 @@
 ---
 interface Props {
   source: string;
-  showFirstName?: boolean;
-  heading?: string;
-  successHeading?: string;
-  successText?: string;
+  heading: string;
+  successHeading: string;
+  successText: string;
+  /* Adds an optional first-name input above the email. */
+  showFirstNameField?: boolean;
   class?: string;
 }
 
 const {
   source,
-  showFirstName = true,
-  heading = 'Want to know when it’s live?',
-  successHeading = 'You’re on the list.',
-  successText = 'I’ll be in touch when the website opens — autumn 2026.',
+  heading,
+  successHeading,
+  successText,
+  showFirstNameField = false,
   class: className,
 } = Astro.props;
 ---
@@ -63,7 +64,7 @@ const {
     </div>
 
     {
-      showFirstName && (
+      showFirstNameField && (
         <>
           <label
             for="first-name"
