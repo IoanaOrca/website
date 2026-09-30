@@ -26,16 +26,12 @@ const { title } = Astro.props;
       >
       </p>
     </div>
-    <div
-      aria-hidden="true"
-      class="h-1 rounded-full bg-paper-200"
-    >
-      <div
-        data-progress-bar
-        class="h-full rounded-full bg-peach-700 transition-[width] duration-300"
-      >
-      </div>
-    </div>
+    <progress
+      data-progress-bar
+      aria-label="Progress"
+      value="0"
+      class="h-1 w-full"
+    ></progress>
   </div>
 
   <slot />
@@ -87,7 +83,7 @@ const { title } = Astro.props;
   const steps = [...(root?.querySelectorAll<HTMLElement>('[data-step]') ?? [])];
   const progress = root?.querySelector<HTMLElement>('[data-progress]');
   const label = root?.querySelector<HTMLElement>('[data-progress-label]');
-  const bar = root?.querySelector<HTMLElement>('[data-progress-bar]');
+  const bar = root?.querySelector<HTMLProgressElement>('[data-progress-bar]');
   const nav = root?.querySelector<HTMLElement>('[data-nav]');
   const back = root?.querySelector<HTMLButtonElement>('[data-back]');
   const next = root?.querySelector<HTMLButtonElement>('[data-next]');
@@ -113,7 +109,10 @@ const { title } = Astro.props;
         label.textContent = `Step ${index + 1} of ${steps.length}`;
         const position = steps[index].querySelector('[data-step-position]');
         if (position) position.textContent = `${label.textContent}: `;
-        bar.style.width = `${((index + 1) / steps.length) * 100}%`;
+        bar.max = steps.length;
+        bar.value = index + 1;
+        // Read as the step, not as a percentage.
+        bar.setAttribute('aria-valuetext', label.textContent);
         back.classList.toggle('invisible', index === 0);
         next.classList.toggle(
           'invisible',
