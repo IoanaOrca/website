@@ -30,3 +30,9 @@ Before changing the coming-soon page, read **Decisions that look like bugs** in
 - **Finish the Impressum** — `src/pages/_imprint.astro` is drafted but excluded
   from the build (underscore prefix) until the business is registered and § 5 DDG
   has a postal address to name.
+- **Move repeated arbitrary Tailwind values into `@theme`** — `leading-[…]`
+  next to every `text-display-*`, `tracking-[0.14em]` on buttons,
+  `tracking-[0.16em]` on labels. Give each display size its own
+  `--text-display-*--line-height` and add `--tracking-button` /
+  `--tracking-label`. One-off layout values (`grid-cols-[…]`, `aspect-[3/4]`,
+  the honeypot offset) stay arbitrary. Compare screenshots before and after.
