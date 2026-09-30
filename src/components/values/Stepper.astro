@@ -8,54 +8,75 @@ const { title } = Astro.props;
 
 <div
   data-stepper
-  class="mx-auto max-w-2xl px-gutter py-section"
+  class="px-3 pt-6 md:pt-18"
 >
   {
-    /* Label and bar show on question steps only, and are filled in by the
-       script so nothing shows a wrong count before it runs. `invisible`
-       rather than `hidden` keeps the steps from shifting as they come and go. */
+    /* A floor, not a fixed height: every step that fits sits on it, so the nav
+       lands in the same spot on each one, and longer steps simply grow. See
+       the scroll in render() for the other half. */
   }
-  <div class="mb-12 flex flex-col gap-3">
-    <div class="flex items-baseline justify-between gap-4">
-      <h1 class="text-sm tracking-eyebrow text-ink-500 uppercase">{title}</h1>
-      <p
-        data-progress-label
-        aria-hidden="true"
-        class="invisible text-sm text-ink-500"
-      >
-      </p>
+  <div
+    data-card
+    class="card mx-auto flex max-w-3xl flex-col rounded-card border border-paper-200 bg-paper-25 px-step pt-step pb-5.5 shadow-card"
+  >
+    {
+      /* Label and bar show on question steps only, and are filled in by the
+         script so nothing shows a wrong count before it runs. */
+    }
+    <div class="flex flex-col gap-3">
+      <div class="flex items-baseline justify-between gap-3">
+        <h1 class="text-label tracking-eyebrow text-ink-700 uppercase">
+          {title}
+        </h1>
+        <p
+          data-progress-label
+          aria-hidden="true"
+          class="invisible text-label text-ink-700 tabular-nums"
+        >
+        </p>
+      </div>
+      <progress
+        data-progress-bar
+        aria-label="Progress"
+        value="0"
+        class="invisible h-0.75 w-full"
+      ></progress>
     </div>
-    <progress
-      data-progress-bar
-      aria-label="Progress"
-      value="0"
-      class="invisible h-1 w-full"
-    ></progress>
+
+    <slot />
+
+    <nav
+      data-nav
+      aria-label="Steps"
+      class="invisible mt-auto flex items-center justify-between gap-5 border-t border-paper-200 pt-5.5"
+    >
+      <button
+        type="button"
+        data-back
+        class="h-12 text-label font-semibold tracking-[0.16em] text-ink-900 uppercase underline underline-offset-4"
+      >
+        Back
+      </button>
+      <button
+        type="button"
+        data-next
+        class="h-12 min-w-36 rounded-control bg-olive-600 px-7 text-label font-semibold tracking-[0.16em] text-paper-50 uppercase transition-[background-color] duration-150 hover:bg-olive-700"
+      >
+        Next
+      </button>
+    </nav>
   </div>
 
-  <slot />
-
-  <nav
-    data-nav
-    aria-label="Steps"
-    class="invisible mt-14 flex items-center justify-between gap-4"
-  >
-    <button
-      type="button"
-      data-back
-      class="py-4 text-sm font-semibold tracking-[0.14em] text-ink-700 uppercase underline underline-offset-4"
-    >
-      Back
-    </button>
-    <button
-      type="button"
-      data-next
-      class="rounded-control bg-olive-600 px-10 py-4 text-sm font-semibold tracking-[0.14em] text-paper-50 uppercase transition-[background-color] duration-150 hover:bg-olive-700"
-    >
-      Next
-    </button>
-  </nav>
+  <div class="mx-auto max-w-3xl px-step pt-7">
+    <slot name="note" />
+  </div>
 </div>
+
+<style>
+  .card {
+    min-height: min(calc(100svh - 1.5rem), 44rem);
+  }
+</style>
 
 <script>
   import { moveStep, resolveStep, stepHash } from '../../lib/steps';
@@ -64,11 +85,12 @@ const { title } = Astro.props;
   const steps = [...(root?.querySelectorAll<HTMLElement>('[data-step]') ?? [])];
   const label = root?.querySelector<HTMLElement>('[data-progress-label]');
   const bar = root?.querySelector<HTMLProgressElement>('[data-progress-bar]');
+  const card = root?.querySelector<HTMLElement>('[data-card]');
   const nav = root?.querySelector<HTMLElement>('[data-nav]');
   const back = root?.querySelector<HTMLButtonElement>('[data-back]');
   const next = root?.querySelector<HTMLButtonElement>('[data-next]');
 
-  if (root && steps.length && label && bar && nav && back && next) {
+  if (root && steps.length && card && label && bar && nav && back && next) {
     const questions = steps.filter((step) =>
       step.hasAttribute('data-question'),
     );
@@ -97,9 +119,15 @@ const { title } = Astro.props;
         next.textContent = steps[index].dataset.nextLabel ?? defaultNextLabel;
         back.classList.toggle('invisible', index === 0);
         next.classList.toggle('invisible', index === steps.length - 1);
-        // Instant, overriding the global smooth scroll, so the new snapshot
-        // is taken at the top.
-        if (moveFocus) window.scrollTo({ top: 0, behavior: 'instant' });
+        // The card's top edge lands 12px below the viewport, so a step that
+        // fits the card floor puts the nav in the same place every time.
+        // Instant, overriding the global smooth scroll, so the new snapshot is
+        // taken in place.
+        if (moveFocus)
+          window.scrollTo({
+            top: card.getBoundingClientRect().top + window.scrollY - 12,
+            behavior: 'instant',
+          });
       };
       const focus = () =>
         steps[index]

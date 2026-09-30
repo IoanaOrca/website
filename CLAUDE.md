@@ -21,7 +21,8 @@ Things on the coming-soon page that a reasonable person would "fix" and
 shouldn't. Each has bitten at least once.
 
 - **`olive-600` (`#5F6D5B`) is the CTA background and nothing else.**
-  `ink-500` (`#6E6C5E`) is legible on `paper-50` only — on the sand or peach
+  `ink-500` (`#6E6C5E`) is legible on `paper-50` and the lighter `paper-25`
+  card only — on the sand or peach
   fills use `ink-700`. Both come from the brand's measured contrast audit, so
   the two eyebrows deliberately differ between sections.
 - **The email input is 16px, not the design's 15px.** Under 16px, iOS zooms the
@@ -59,6 +60,11 @@ shouldn't. Each has bitten at least once.
 - **Astro strips whitespace between adjacent inline elements.** Two `<span>`s on
   separate source lines render with no space between them — use an explicit
   `{' '}`. Block-level spans are fine.
+- **The values card has a minimum height, not a fixed one, and no sticky nav.**
+  `min(100svh − 1.5rem, 44rem)` plus scrolling the card's top to 12px below the
+  viewport on every step change puts Back/Next in the same spot on every step
+  that fits. Longer steps grow and scroll normally. A sticky bottom bar and
+  an equal-height card were both tried and rejected.
 - **Page copy is client-approved.** Don't reword it, and keep the typographic
   characters: `’`, `…`, `—`.
 
