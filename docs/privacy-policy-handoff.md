@@ -43,14 +43,6 @@ it.
 - **No "Active — Re-certification under Review" status for Meta.** True today,
   stale within months. Plain DPF is enough.
 
-- **The values page writes one `localStorage` entry.** `values-unlocked=1`,
-  set after a successful signup on `/values` so returning visitors skip the
-  email gate. Decided 30 September 2026 as strictly necessary for a service the
-  visitor requested (§ 25(2) no. 2 TDDDG), and disclosed in the Google Sheets
-  part of the policy. It is the only device write on the site; GoatCounter
-  still writes nothing. It must never hold the email or anything derived from
-  it — that would make it personal data and reopen the consent question.
-
 ## Analytics: GoatCounter — verified 17 August 2026
 
 Wired into `BaseLayout.astro`, so it runs on every page. Facts checked against
@@ -188,7 +180,7 @@ Deliberately omitted from the page, each for a reason:
   one, publishing it in the imprint is mandatory. Confirm before launch.
 - **Signup list retention.** There is no automatic deletion and none is planned.
   Art. 13(2)(a) accepts criteria in place of a period, so the policy now says the
-  data is kept until it is transferred to an email provider, until the mailing
+  data is kept until it is transferred to an email provider, until the launch
   list has served its purpose, or until erasure is requested. That is compliant
   as written, but "never deleted" is a separate question worth answering before
   the list gets large.

@@ -1,5 +1,5 @@
 ---
-import SignupForm from '../SignupForm.astro';
+import SignupForm from './SignupForm.astro';
 ---
 
 <section
@@ -25,13 +25,7 @@ import SignupForm from '../SignupForm.astro';
       </p>
     </div>
     <div>
-      <SignupForm
-        source="coming-soon"
-        heading="Want to know when it’s live?"
-        successHeading="You’re on the list."
-        successText="I’ll be in touch when the website opens — autumn 2026."
-        showFirstNameField
-      />
+      <SignupForm />
       <div class="mt-9 flex flex-col gap-2.5">
         <p class="text-base text-paper-50/82">
           In the meantime, follow along on Instagram:

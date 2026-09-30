@@ -29,7 +29,6 @@ function fields(overrides: Partial<SubscribeFields> = {}): SubscribeFields {
     email: 'ioana@example.com',
     firstName: 'Ioana',
     honeypot: '',
-    source: 'coming-soon',
     ...overrides,
   };
 }
@@ -101,12 +100,6 @@ describe('subscribe', () => {
     const spy = stubFetch(async () => jsonResponse({ ok: true }));
     await subscribe(ENDPOINT, fields({ firstName: '  Ioana  ' }));
     expect(bodyOf(spy).firstName).toBe('Ioana');
-  });
-
-  it('posts the source it is given', async () => {
-    const spy = stubFetch(async () => jsonResponse({ ok: true }));
-    await subscribe(ENDPOINT, fields({ source: 'values-quiz' }));
-    expect(bodyOf(spy).source).toBe('values-quiz');
   });
 
   it('subscribes without a first name, since the field is optional', async () => {

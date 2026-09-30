@@ -1,7 +1,7 @@
 /**
- * Receives signups from the site's forms (coming-soon and /values), appends
- * them to the bound sheet and emails the script owner. Deployed as a web app:
- * "Execute as: me", "Access: anyone".
+ * Receives signups from the coming-soon page, appends them to the bound sheet
+ * and emails the script owner. Deployed as a web app: "Execute as: me",
+ * "Access: anyone".
  *
  * The client posts Content-Type: text/plain so the request stays a CORS
  * simple request — Apps Script web apps cannot answer a preflight.

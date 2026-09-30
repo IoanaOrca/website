@@ -1,5 +1,4 @@
 ---
-import SignupForm from '../components/SignupForm.astro';
 import Step from '../components/values/Step.astro';
 import Stepper from '../components/values/Stepper.astro';
 import PageLayout from '../layouts/PageLayout.astro';
@@ -16,19 +15,6 @@ import PageLayout from '../layouts/PageLayout.astro';
         This exercise takes about twenty minutes. You’ll need a pen and a sheet
         of paper — nothing you write goes anywhere but your page.
       </p>
-    </Step>
-
-    <Step
-      hidden
-      title="Before we start"
-    >
-      <SignupForm
-        source="values-quiz"
-        heading="Join Ioana’s list to continue"
-        successHeading="You’re on the list."
-        successText="Tap Next to begin."
-        class="border border-paper-200"
-      />
     </Step>
 
     <Step

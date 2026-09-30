@@ -6,8 +6,6 @@ export interface SubscribeFields {
   /* Optional on the form — an empty name must never block a signup. */
   firstName: string;
   honeypot: string;
-  /* Which form the signup came from. Stored per row. */
-  source: string;
 }
 
 /* Stored with every signup. Bump when the promise shown or the fields
@@ -26,7 +24,7 @@ export function isValidEmail(email: string): boolean {
    would type-check and fail only at runtime. */
 export async function subscribe(
   endpoint: string,
-  { email, firstName, honeypot, source }: SubscribeFields,
+  { email, firstName, honeypot }: SubscribeFields,
 ): Promise<SubscribeResult> {
   if (honeypot) return { ok: true };
   if (!isValidEmail(email)) return { ok: false, reason: 'invalid' };
@@ -44,7 +42,7 @@ export async function subscribe(
         // Always empty here — the client short-circuits above. Sent anyway so
         // the server can catch bots that post directly and never run this JS.
         website: honeypot,
-        source,
+        source: 'coming-soon',
         consent: CONSENT_VERSION,
       }),
     });

@@ -11,9 +11,9 @@ make that one and say what you left out.
   utilities or otherwise constraining the tooling.
 - Add tooling layers when there is code that needs them, not before.
 - Comments explain why something non-obvious is the way it is. Default to none.
-- Booleans read as yes/no questions: `isUnlocked`, `hasAttempted`,
-  `showFirstNameField`. Component props that mirror an HTML attribute keep its
-  name (`hidden`, `disabled`).
+- Booleans read as yes/no questions: `hasAttempted`, `isOpen`, `showDetails`.
+  Component props that mirror an HTML attribute keep its name (`hidden`,
+  `disabled`).
 
 ## Decisions that look like bugs
 
@@ -59,10 +59,6 @@ shouldn't. Each has bitten at least once.
 - **Astro strips whitespace between adjacent inline elements.** Two `<span>`s on
   separate source lines render with no space between them — use an explicit
   `{' '}`. Block-level spans are fine.
-- **`/values` stores `values-unlocked=1` in `localStorage`.** It is the one
-  deliberate device write on the site and it is disclosed in the privacy
-  policy. Never put the email or anything derived from it there. The gate is
-  soft on purpose: the content is in the HTML, and the page is static.
 - **Page copy is client-approved.** Don't reword it, and keep the typographic
   characters: `’`, `…`, `—`.
 

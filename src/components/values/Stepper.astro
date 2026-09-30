@@ -61,24 +61,6 @@ const { title } = Astro.props;
 <script>
   import { moveStep, resolveStep, stepHash } from '../../lib/steps';
 
-  const UNLOCKED_KEY = 'values-unlocked';
-
-  const readUnlocked = () => {
-    try {
-      return localStorage.getItem(UNLOCKED_KEY) === '1';
-    } catch {
-      return false;
-    }
-  };
-
-  const writeUnlocked = () => {
-    try {
-      localStorage.setItem(UNLOCKED_KEY, '1');
-    } catch {
-      // Private mode or blocked storage: the gate comes back next visit.
-    }
-  };
-
   const root = document.querySelector<HTMLElement>('[data-stepper]');
   const steps = [...(root?.querySelectorAll<HTMLElement>('[data-step]') ?? [])];
   const progress = root?.querySelector<HTMLElement>('[data-progress]');
@@ -89,17 +71,7 @@ const { title } = Astro.props;
   const next = root?.querySelector<HTMLButtonElement>('[data-next]');
 
   if (root && steps.length && progress && label && bar && nav && back && next) {
-    // The gate is whichever step holds the signup form, so it cannot disagree
-    // with the page content.
-    const card = root.querySelector('#signup-card');
-    const gate = card ? steps.findIndex((step) => step.contains(card)) : -1;
-    let isUnlocked = readUnlocked();
-
-    if (isUnlocked)
-      root.querySelector('#signup-card')?.setAttribute('data-done', '');
-
-    const state = () => ({ count: steps.length, gate, isUnlocked });
-    const current = () => resolveStep(location.hash, state());
+    const current = () => resolveStep(location.hash, steps.length);
 
     // moveFocus marks a real step change; only those scroll, animate and
     // move focus.
@@ -114,10 +86,7 @@ const { title } = Astro.props;
         // Read as the step, not as a percentage.
         bar.setAttribute('aria-valuetext', label.textContent);
         back.classList.toggle('invisible', index === 0);
-        next.classList.toggle(
-          'invisible',
-          index === steps.length - 1 || (index === gate && !isUnlocked),
-        );
+        next.classList.toggle('invisible', index === steps.length - 1);
         // Instant, overriding the global smooth scroll, so the new snapshot
         // is taken at the top.
         if (moveFocus) window.scrollTo({ top: 0, behavior: 'instant' });
@@ -137,8 +106,7 @@ const { title } = Astro.props;
       document.startViewTransition(update).finished.finally(focus);
     };
 
-    // Rewrites a hash the visitor may not see (out of range, past the gate)
-    // without adding a history entry.
+    // Rewrites an out-of-range hash without adding a history entry.
     const show = (moveFocus: boolean) => {
       const index = current();
       if (location.hash !== stepHash(index))
@@ -146,23 +114,16 @@ const { title } = Astro.props;
       render(index, moveFocus);
     };
 
-    // A step that would not move adds no history entry, so a double tap past
-    // the gate or the last step costs the back button nothing.
+    // A step that would not move adds no history entry, so a double tap on
+    // the last step costs the back button nothing.
     const go = (delta: number) => {
       const from = current();
-      const to = moveStep(from, delta, state());
+      const to = moveStep(from, delta, steps.length);
       if (to !== from) location.hash = stepHash(to);
     };
     back.addEventListener('click', () => go(-1));
     next.addEventListener('click', () => go(1));
     window.addEventListener('hashchange', () => show(true));
-
-    // No auto-advance: the form has just moved focus to its success heading.
-    root.addEventListener('signup:success', () => {
-      isUnlocked = true;
-      writeUnlocked();
-      render(current(), false);
-    });
 
     show(false);
     progress.classList.remove('invisible');
