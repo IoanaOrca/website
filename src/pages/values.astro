@@ -2,59 +2,283 @@
 import Step from '../components/values/Step.astro';
 import Stepper from '../components/values/Stepper.astro';
 import PageLayout from '../layouts/PageLayout.astro';
+
+const questions = [
+  {
+    title: 'Your space',
+    context: [
+      'Things that don’t matter to you tend to end up in a drawer, the cellar or the bin. Things that do matter stay where you can see and use them. You might say you love a hobby, but if the equipment is in a box you never open, notice that.',
+      'Look around your home or workspace.',
+    ],
+    prompt: 'Which 3 kinds of things fill your space the most?',
+    note: '(Photos, books, plants, awards, tools, furniture for guests, souvenirs, screens… if it’s the laptop or phone, think about the biggest usage it has for you)',
+  },
+  {
+    title: 'Your time',
+    context: [
+      'People find time for what matters to them. “I don’t have time” often means “I’m busy with something I care about more.”',
+    ],
+    prompt:
+      'Which 3 activities take most of your time in a normal week? Include work, but be specific about what you actually do.',
+  },
+  {
+    title: 'Your energy',
+    context: [
+      'Some activities leave you drained. Others leave you with more energy than when you started.',
+    ],
+    prompt:
+      'Which 3 activities do you always have energy for, even after a long day?',
+  },
+  {
+    title: 'Your money',
+    context: [
+      'You find money for what matters to you. You hold on to it for what doesn’t.',
+    ],
+    prompt:
+      'What are the 3 things you spend the most money on and always find money for?',
+  },
+  {
+    title: 'Your order',
+    context: [
+      'We keep order around what matters and let chaos happen around what doesn’t. It could be your wardrobe, your calendar, your finances, your business, your kitchen, or a daily ritual.',
+    ],
+    prompt: 'Which 3 areas of your life are the most organised?',
+  },
+  {
+    title: 'Your discipline',
+    context: [
+      'There are things you do without anyone pushing you. Nobody has to get you up for them, and you keep the promises you make about them.',
+    ],
+    prompt:
+      'Which 3 activities or areas are you most reliable, disciplined and focused in?',
+  },
+  {
+    title: 'Your thoughts',
+    context: [
+      'I don’t mean worries, distractions, or the “shoulds” in your head. I mean the thoughts about how you want your life to look that you’re slowly acting on.',
+    ],
+    prompt: 'Which 3 things do you think about most?',
+    note: 'Please avoid answers like “I’m not good at anything” or “I don’t know what I want.”',
+  },
+  {
+    title: 'Your pictures',
+    context: [
+      'Which images come to mind often, such as daydreams or flashes of a future scene? I’m not asking about fantasies that go nowhere. I mean the ones that are slowly becoming real.',
+    ],
+    prompt:
+      'Which 3 outcomes do you picture most that are already starting to happen?',
+  },
+  {
+    title: 'Your inner voice',
+    context: [
+      'What do you keep telling yourself about the life you want? Not the negative self-talk, and not the big promises that never turn into anything. I mean the inner conversations that are slowly showing results.',
+    ],
+    prompt:
+      'Which 3 things do you most often tell yourself about how you want your life to be?',
+  },
+  {
+    title: 'Your conversations',
+    context: [
+      'In a group, there are topics you bring up without waiting for anyone to ask. Other topics make you go quiet or want to change the subject.',
+    ],
+    prompt: 'Which 3 topics do you most want to talk about?',
+  },
+  {
+    title: 'Your inspiration',
+    context: [
+      'What inspires you now? What has inspired you in the past? Which people inspire you, and what do they have in common?',
+    ],
+    prompt:
+      'Which 3 people, actions or outcomes inspire you most, and what do they have in common?',
+  },
+  {
+    title: 'Your long-term goals',
+    context: [
+      'Not fantasies. I’m asking about goals that have stayed with you over time and that you’re turning into reality step by step.',
+    ],
+    prompt:
+      'Which 3 long-term goals are you most consistent with, and are gradually becoming real?',
+  },
+  {
+    title: 'Your learning',
+    context: [
+      'When you walk into a bookshop, which section do you head to first? What do you follow online, which podcasts do you listen to, which documentaries do you seek out, and what do you look up just because you’re curious?',
+    ],
+    prompt: 'Which 3 topics do you most love to learn about?',
+  },
+];
 ---
 
-{/* PLACEHOLDER COPY — replace with Ioana’s approved text before merge. */}
+{
+  /* Copy from Ioana’s “Discover Your Values” doc. The description and the
+     last step are drafts awaiting her approval. */
+}
 <PageLayout
-  title="Find your values — Ioana Orca"
-  description="A short pen-and-paper exercise to find the values behind your decisions."
+  title="Discover your values — Ioana Orca"
+  description="A 25-minute pen-and-paper exercise to discover your current priorities by looking at what you actually do."
 >
-  <Stepper title="Find your values">
-    <Step title="What matters to you?">
+  <Stepper title="Discover your values">
+    <Step
+      title="What matters to you, really?"
+      nextLabel="I’m ready"
+    >
+      <p>We all have things we say are important to us.</p>
       <p>
-        This exercise takes about twenty minutes. You’ll need a pen and a sheet
-        of paper — nothing you write goes anywhere but your page.
+        But what we say matters and what we consistently make time, energy,
+        money and space for aren’t always the same.
+      </p>
+      <p>
+        This process is designed to help you discover your current personal
+        priorities by looking at your real-life actions.
+      </p>
+      <p>There are no right or wrong answers.</p>
+      <p>Before you click next, get:</p>
+      <ul class="list-disc pl-6">
+        <li>a pen and paper</li>
+        <li>at least 25 uninterrupted minutes</li>
+        <li>a quiet spot where you can be honest with yourself</li>
+      </ul>
+    </Step>
+
+    <Step
+      hidden
+      title="What you’ll discover"
+    >
+      <p>By the end, you’ll have two things.</p>
+      <ol class="flex list-decimal flex-col gap-3 pl-6">
+        <li>
+          <strong class="font-semibold text-ink-900"
+            >Your values, named clearly.</strong
+          >{' '}
+          A value here isn’t a big abstract word. It’s something concrete in your
+          life: a thing you do, or something you spend your time on.
+        </li>
+        <li>
+          <strong class="font-semibold text-ink-900"
+            >An answer to one question:</strong
+          >{' '}
+          “What is most important to me right now, judging by what I actually do every
+          day?”
+        </li>
+      </ol>
+    </Step>
+
+    <Step
+      hidden
+      title="Before we start, four things about values"
+    >
+      <p>
+        <strong class="font-semibold text-ink-900"
+          >They’re neither good nor bad.</strong
+        >{' '}
+        No value is better than another. They aren’t ideals like “perfect kindness”
+        or “total honesty” that nobody fully reaches. A value simply is what matters
+        to you.
+      </p>
+      <p>
+        <strong class="font-semibold text-ink-900"
+          >They’re yours, not society’s.</strong
+        >{' '}
+        Plenty of people believe “my children or family must come first.” But many
+        women have given enormous value to the world without putting family at number
+        one. What matters is what’s true for you, not what you’re expected to say.
+      </p>
+      <p>
+        <strong class="font-semibold text-ink-900">They work together.</strong>{
+          ' '
+        }
+        Your values support each other, and all of them ultimately serve the one at
+        the top.
+      </p>
+      <p>
+        <strong class="font-semibold text-ink-900">They change.</strong>{' '}
+        Your order of values can shift slowly over time, or suddenly after something
+        big: an accident, a moving experience, a child being born. If it happens,
+        notice it consciously. It’s much easier to stay steady when you can name what
+        changed.
       </p>
     </Step>
 
     <Step
       hidden
-      title="Remember a good moment"
+      title="This is not a test you can fail"
+      nextLabel="Let’s go"
     >
       <p>
-        Write down three moments when you felt most like yourself. Where were
-        you, who was there, what were you doing?
+        The questions are built to show what your life reveals and to filter out
+        what “should” matter. The more present you are, the closer the result
+        will be to your reality.
       </p>
+      <p>How to answer:</p>
+      <ul class="flex list-disc flex-col gap-3 pl-6">
+        <li>Write 3–5 answers to each question.</li>
+        <li>
+          Write what’s true today, not what you hope is true. If you catch
+          yourself writing what you wish you did, cross it out and write what
+          you actually do.
+        </li>
+        <li>
+          The same value can show up in several answers. That’s normal. You’ll
+          look for it later.
+        </li>
+      </ul>
+    </Step>
+
+    {
+      questions.map((question, i) => (
+        <Step
+          hidden
+          isQuestion
+          title={question.title}
+          nextLabel={
+            i === questions.length - 1 ? 'I’ve answered all 13' : undefined
+          }
+        >
+          {question.context.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+          <p class="font-display text-display-sm leading-snug text-ink-900">
+            {question.prompt}
+          </p>
+          {question.note && <p class="text-base">{question.note}</p>}
+        </Step>
+      ))
+    }
+
+    <Step
+      hidden
+      title="Congrats, that was it."
+      nextLabel="Show me the steps"
+    >
+      <p>Now you have 39 answers. Let’s find the pattern.</p>
     </Step>
 
     <Step
       hidden
-      title="Name what was there"
+      title="Find your top values"
     >
+      <ol class="flex list-decimal flex-col gap-3 pl-6">
+        <li>
+          Read through all 39 answers. Circle anything that shows up more than
+          once, even in different words.
+        </li>
+        <li>
+          Group the answers that point to the same thing. “Yoga”, “running” and
+          “my morning walk” might all be “moving my body”.
+        </li>
+        <li>
+          Give each group a short name and count how many answers it holds.
+        </li>
+        <li>
+          Keep the four groups with the highest counts. Those are your top
+          values. Beyond four, it’s mostly noise.
+        </li>
+      </ol>
       <p>
-        For each moment, write the words that describe what made it good —
-        freedom, closeness, learning, calm…
+        The group at the top answers the question you started with: what is most
+        important to you right now, judging by what you actually do every day.
       </p>
-    </Step>
-
-    <Step
-      hidden
-      title="Choose five"
-    >
-      <p>
-        Look at every word on your page. Circle the five that feel truest. Cross
-        out the rest.
-      </p>
-    </Step>
-
-    <Step
-      hidden
-      title="Your values"
-    >
-      <p>
-        The five words you circled are a starting point. Keep the page somewhere
-        you’ll see it.
-      </p>
+      <p>Your values change, so it’s worth doing this again in three months.</p>
       <p>
         <a
           href="https://instagram.com/ioanaorca"
@@ -65,4 +289,8 @@ import PageLayout from '../layouts/PageLayout.astro';
       </p>
     </Step>
   </Stepper>
+
+  <p class="mx-auto max-w-2xl px-gutter pb-8 text-sm text-ink-500">
+    Based on the Demartini Method.
+  </p>
 </PageLayout>

@@ -2,13 +2,19 @@
 interface Props {
   title: string;
   hidden?: boolean;
+  /* Counts towards "Question X of N" and gets lines to write answers on. */
+  isQuestion?: boolean;
+  /* Replaces the Next button's text while this step is showing. */
+  nextLabel?: string;
 }
 
-const { title, hidden = false } = Astro.props;
+const { title, hidden = false, isQuestion = false, nextLabel } = Astro.props;
 ---
 
 <section
   data-step
+  data-question={isQuestion ? '' : undefined}
+  data-next-label={nextLabel}
   hidden={hidden}
   class="flex flex-col gap-8"
 >
@@ -28,4 +34,18 @@ const { title, hidden = false } = Astro.props;
   <div class="flex flex-col gap-5 text-lg leading-[1.65] text-ink-700">
     <slot />
   </div>
+  {
+    isQuestion && (
+      <div
+        aria-hidden="true"
+        class="flex flex-col gap-2"
+      >
+        {[1, 2, 3].map((n) => (
+          <div class="flex h-12 items-end border-b border-paper-200 pb-2 text-ink-500">
+            {n}.
+          </div>
+        ))}
+      </div>
+    )
+  }
 </section>

@@ -11,18 +11,17 @@ const { title } = Astro.props;
   class="mx-auto max-w-2xl px-gutter py-section"
 >
   {
-    /* Filled in by the script, so nothing shows a wrong count before it runs. */
+    /* Label and bar show on question steps only, and are filled in by the
+       script so nothing shows a wrong count before it runs. `invisible`
+       rather than `hidden` keeps the steps from shifting as they come and go. */
   }
-  <div
-    data-progress
-    class="invisible mb-12 flex flex-col gap-3"
-  >
+  <div class="mb-12 flex flex-col gap-3">
     <div class="flex items-baseline justify-between gap-4">
       <h1 class="text-sm tracking-eyebrow text-ink-500 uppercase">{title}</h1>
       <p
         data-progress-label
         aria-hidden="true"
-        class="text-sm text-ink-500"
+        class="invisible text-sm text-ink-500"
       >
       </p>
     </div>
@@ -30,7 +29,7 @@ const { title } = Astro.props;
       data-progress-bar
       aria-label="Progress"
       value="0"
-      class="h-1 w-full"
+      class="invisible h-1 w-full"
     ></progress>
   </div>
 
@@ -63,14 +62,17 @@ const { title } = Astro.props;
 
   const root = document.querySelector<HTMLElement>('[data-stepper]');
   const steps = [...(root?.querySelectorAll<HTMLElement>('[data-step]') ?? [])];
-  const progress = root?.querySelector<HTMLElement>('[data-progress]');
   const label = root?.querySelector<HTMLElement>('[data-progress-label]');
   const bar = root?.querySelector<HTMLProgressElement>('[data-progress-bar]');
   const nav = root?.querySelector<HTMLElement>('[data-nav]');
   const back = root?.querySelector<HTMLButtonElement>('[data-back]');
   const next = root?.querySelector<HTMLButtonElement>('[data-next]');
 
-  if (root && steps.length && progress && label && bar && nav && back && next) {
+  if (root && steps.length && label && bar && nav && back && next) {
+    const questions = steps.filter((step) =>
+      step.hasAttribute('data-question'),
+    );
+    const defaultNextLabel = next.textContent.trim();
     const current = () => resolveStep(location.hash, steps.length);
 
     // moveFocus marks a real step change; only those scroll, animate and
@@ -78,13 +80,21 @@ const { title } = Astro.props;
     const render = (index: number, moveFocus: boolean) => {
       const update = () => {
         steps.forEach((step, i) => (step.hidden = i !== index));
-        label.textContent = `Step ${index + 1} of ${steps.length}`;
+        const question = questions.indexOf(steps[index]);
+        const isQuestion = question >= 0;
+        label.classList.toggle('invisible', !isQuestion);
+        bar.classList.toggle('invisible', !isQuestion);
+        if (isQuestion) {
+          label.textContent = `Question ${question + 1} of ${questions.length}`;
+          bar.max = questions.length;
+          bar.value = question + 1;
+          // Read as the question, not as a percentage.
+          bar.setAttribute('aria-valuetext', label.textContent);
+        }
         const position = steps[index].querySelector('[data-step-position]');
-        if (position) position.textContent = `${label.textContent}: `;
-        bar.max = steps.length;
-        bar.value = index + 1;
-        // Read as the step, not as a percentage.
-        bar.setAttribute('aria-valuetext', label.textContent);
+        if (position)
+          position.textContent = isQuestion ? `${label.textContent}: ` : '';
+        next.textContent = steps[index].dataset.nextLabel ?? defaultNextLabel;
         back.classList.toggle('invisible', index === 0);
         next.classList.toggle('invisible', index === steps.length - 1);
         // Instant, overriding the global smooth scroll, so the new snapshot
@@ -126,7 +136,6 @@ const { title } = Astro.props;
     window.addEventListener('hashchange', () => show(true));
 
     show(false);
-    progress.classList.remove('invisible');
     nav.classList.remove('invisible');
   }
 </script>
