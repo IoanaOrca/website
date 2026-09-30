@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { resolveStep, stepHash } from './steps';
+import { moveStep, resolveStep, stepHash } from './steps';
 
 const locked = { count: 6, gate: 1, unlocked: false };
 const unlocked = { ...locked, unlocked: true };
@@ -50,5 +50,28 @@ describe('resolveStep', () => {
     expect(
       resolveStep('#step-4', { count: 6, gate: -1, unlocked: false }),
     ).toBe(3);
+  });
+});
+
+describe('moveStep', () => {
+  it('moves one step forward and back', () => {
+    expect(moveStep(2, 1, unlocked)).toBe(3);
+    expect(moveStep(2, -1, unlocked)).toBe(1);
+  });
+
+  it('stays at the gate while locked', () => {
+    expect(moveStep(1, 1, locked)).toBe(1);
+  });
+
+  it('passes the gate once unlocked', () => {
+    expect(moveStep(1, 1, unlocked)).toBe(2);
+  });
+
+  it('stays on the last step instead of wrapping to the first', () => {
+    expect(moveStep(5, 1, unlocked)).toBe(5);
+  });
+
+  it('stays on the first step going back', () => {
+    expect(moveStep(0, -1, unlocked)).toBe(0);
   });
 });
