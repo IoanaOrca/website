@@ -1,19 +1,44 @@
+---
+interface Props {
+  source: string;
+  firstName?: boolean;
+  heading?: string;
+  successHeading?: string;
+  successText?: string;
+  class?: string;
+}
+
+const {
+  source,
+  firstName = true,
+  heading = 'Want to know when it’s live?',
+  successHeading = 'You’re on the list.',
+  successText = 'I’ll be in touch when the website opens — autumn 2026.',
+  class: className,
+} = Astro.props;
+---
+
 {
   /*
   Both states share one grid cell, so the card is always as tall as the form
   and swapping in the confirmation cannot collapse it. The form is hidden with
   `invisible` rather than `hidden` for the same reason: it has to keep
-  occupying the cell.
+  occupying the cell. The swap is driven by `data-done` on the card so a page
+  can show the success state without a submit.
 */
 }
-<div class="grid rounded-card bg-paper-50 p-card">
+<div
+  id="signup-card"
+  data-source={source}
+  class:list={['group grid rounded-card bg-paper-50 p-card', className]}
+>
   <form
     id="signup"
     novalidate
-    class="col-start-1 row-start-1 flex flex-col gap-4.5"
+    class="col-start-1 row-start-1 flex flex-col gap-4.5 group-data-done:invisible"
   >
     <h3 class="font-display text-display-md leading-[1.2]">
-      Want to know when it’s live?
+      {heading}
     </h3>
 
     {
@@ -37,19 +62,25 @@
       />
     </div>
 
-    <label
-      for="first-name"
-      class="mt-3.5 text-xs tracking-[0.16em] text-ink-500 uppercase"
-    >
-      First name (optional)
-    </label>
-    <input
-      id="first-name"
-      name="first-name"
-      type="text"
-      autocomplete="given-name"
-      class="rounded-control border border-ink-500 bg-paper-50 px-4 py-4 text-base"
-    />
+    {
+      firstName && (
+        <>
+          <label
+            for="first-name"
+            class="mt-3.5 text-xs tracking-[0.16em] text-ink-500 uppercase"
+          >
+            First name (optional)
+          </label>
+          <input
+            id="first-name"
+            name="first-name"
+            type="text"
+            autocomplete="given-name"
+            class="rounded-control border border-ink-500 bg-paper-50 px-4 py-4 text-base"
+          />
+        </>
+      )
+    }
 
     <label
       for="email"
@@ -105,17 +136,17 @@
   }
   <div
     id="signup-success"
-    class="invisible col-start-1 row-start-1 flex flex-col justify-center gap-4"
+    class="invisible col-start-1 row-start-1 flex flex-col justify-center gap-4 group-data-done:visible"
   >
     <h3
       id="signup-success-heading"
       tabindex="-1"
       class="font-display text-display-md leading-[1.2]"
     >
-      You’re on the list.
+      {successHeading}
     </h3>
     <p class="text-base text-ink-700">
-      I’ll be in touch when the website opens — autumn 2026.
+      {successText}
     </p>
   </div>
 </div>
@@ -123,18 +154,19 @@
 <script>
   import { PUBLIC_SUBSCRIBE_URL } from 'astro:env/client';
 
-  import { isValidEmail, subscribe } from '../../lib/subscribe';
+  import { isValidEmail, subscribe } from '../lib/subscribe';
 
   const INVALID_MESSAGE = 'That doesn’t look like an email address.';
   const FAILURE_MESSAGE = 'Something went wrong. Please try again.';
   const PENDING_MESSAGE = 'Sending…';
 
+  const card = document.querySelector<HTMLElement>('#signup-card');
   const form = document.querySelector<HTMLFormElement>('#signup');
-  const success = document.querySelector<HTMLElement>('#signup-success');
   const heading = document.querySelector<HTMLElement>(
     '#signup-success-heading',
   );
   const email = document.querySelector<HTMLInputElement>('#email');
+  // Absent when the page renders the form without it.
   const firstName = document.querySelector<HTMLInputElement>('#first-name');
   const honeypot = document.querySelector<HTMLInputElement>('#subject');
   const error = document.querySelector<HTMLElement>('#email-error');
@@ -149,11 +181,10 @@
   form?.addEventListener('submit', (event) => event.preventDefault());
 
   if (
+    card &&
     form &&
-    success &&
     heading &&
     email &&
-    firstName &&
     honeypot &&
     error &&
     status &&
@@ -208,17 +239,20 @@
 
       const result = await subscribe(PUBLIC_SUBSCRIBE_URL, {
         email: email.value,
-        firstName: firstName.value,
+        firstName: firstName?.value ?? '',
         honeypot: honeypot.value,
+        source: card.dataset.source ?? '',
       });
 
       if (result.ok) {
         // Left visible, a failure message would keep padding the grid row.
         clearStatus();
-        form.classList.add('invisible');
-        success.classList.remove('invisible');
+        card.dataset.done = '';
         // Only once it is visible: a hidden subtree refuses focus outright.
         heading.focus();
+        card.dispatchEvent(
+          new CustomEvent('signup:success', { bubbles: true }),
+        );
         return;
       }
 
