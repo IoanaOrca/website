@@ -1,7 +1,7 @@
 /**
- * Receives signups from the coming-soon page, appends them to the bound sheet
- * and emails the script owner. Deployed as a web app: "Execute as: me",
- * "Access: anyone".
+ * Receives signups from the site's forms (coming-soon and /values), appends
+ * them to the bound sheet and emails the script owner. Deployed as a web app:
+ * "Execute as: me", "Access: anyone".
  *
  * The client posts Content-Type: text/plain so the request stays a CORS
  * simple request — Apps Script web apps cannot answer a preflight.
@@ -30,6 +30,7 @@ function doPost(e) {
   if (!EMAIL_PATTERN.test(email)) return json({ ok: false, reason: 'invalid' });
 
   var firstName = String(data.firstName || '').trim();
+  var source = String(data.source || '');
 
   // The dedupe is a read-then-write, so concurrent submits must serialise.
   var lock = LockService.getScriptLock();
@@ -45,7 +46,7 @@ function doPost(e) {
         // Server-side: client clocks are wrong often enough to poison the
         // consent record.
         new Date().toISOString(),
-        String(data.source || ''),
+        source,
         String(data.consent || ''),
       ]);
       added = true;
@@ -57,13 +58,13 @@ function doPost(e) {
   // Only for rows actually written: a duplicate appends nothing, and a tripped
   // honeypot returned long before this. Sent after releasing the lock so mail
   // latency does not serialise concurrent signups.
-  if (added) notify(email, firstName);
+  if (added) notify(email, firstName, source);
 
   // A duplicate returns success. Never disclose list membership.
   return json({ ok: true });
 }
 
-function notify(email, firstName) {
+function notify(email, firstName, source) {
   // A notification failure must never reach the subscriber. MailApp throws once
   // the daily quota is spent, and an unhandled throw here returns an HTML error
   // page — the client cannot parse that, so someone whose signup succeeded
@@ -75,6 +76,7 @@ function notify(email, firstName) {
       body: [
         'Email: ' + email,
         'First name: ' + (firstName || '(not given)'),
+        'Source: ' + (source || '(unknown)'),
         'Received: ' + new Date().toISOString(),
       ].join('\n'),
     });
