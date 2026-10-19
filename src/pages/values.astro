@@ -45,7 +45,7 @@ const questions = [
     prompt: 'Which 3 areas of your life are the most organised?',
   },
   {
-    title: 'Your discipline',
+    title: 'Your motivation',
     context: [
       'There are things you do without anyone pushing you. Nobody has to get you up for them, and you keep the promises you make about them.',
     ],
@@ -61,20 +61,12 @@ const questions = [
     note: 'Please avoid answers like “I’m not good at anything” or “I don’t know what I want.”',
   },
   {
-    title: 'Your pictures',
+    title: 'Your dreams',
     context: [
-      'Which images come to mind often, such as daydreams or flashes of a future scene? I’m not asking about fantasies that go nowhere. I mean the ones that are slowly becoming real.',
+      'What do you dream most and acheve? Which images come to mind often, such as daydreams or flashes of a future scene? I’m not asking about fantasies that go nowhere. I mean the ones that are slowly becoming real.',
     ],
     prompt:
       'Which 3 outcomes do you picture most that are already starting to happen?',
-  },
-  {
-    title: 'Your inner voice',
-    context: [
-      'What do you keep telling yourself about the life you want? Not the negative self-talk, and not the big promises that never turn into anything. I mean the inner conversations that are slowly showing results.',
-    ],
-    prompt:
-      'Which 3 things do you most often tell yourself about how you want your life to be?',
   },
   {
     title: 'Your conversations',
@@ -133,7 +125,7 @@ const questions = [
         priorities by looking at your real-life actions.
       </p>
       <p>There are no right or wrong answers.</p>
-      <p>Before you click next, get:</p>
+      <p>Before you start, get:</p>
       <ul class="flex list-disc flex-col gap-1.5 pl-4.5 marker:text-peach-700">
         <li>a pen and paper</li>
         <li>at least 25 uninterrupted minutes</li>
@@ -168,7 +160,7 @@ const questions = [
 
     <Step
       hidden
-      title="Before we start, four things about values"
+      title="Before we start, a few things about values:"
     >
       <p>
         <strong class="font-semibold text-ink-900"
@@ -216,12 +208,12 @@ const questions = [
       <ul class="flex list-disc flex-col gap-1.5 pl-4.5 marker:text-peach-700">
         <li>Write 3–5 answers to each question.</li>
         <li>
-          Write what’s true today, not what you hope is true. If you catch
-          yourself writing what you wish you did, cross it out and write what
-          you actually do.
+          Write what’s true today, not what you hope is true.
+          <br /><b>Important:</b> If you catch yourself writing what you wish you
+          did, cross it out and write what you actually do.
         </li>
         <li>
-          The same value can show up in several answers. That’s normal. You’ll
+          The same value can show up in several answers. That’s normal. We’ll
           look for it later.
         </li>
       </ul>
@@ -234,7 +226,9 @@ const questions = [
           isQuestion
           title={question.title}
           nextLabel={
-            i === questions.length - 1 ? 'I’ve answered all 13' : undefined
+            i === questions.length - 1
+              ? 'I’ve answered all 12 questions'
+              : undefined
           }
         >
           {question.context.map((paragraph) => (
@@ -253,7 +247,7 @@ const questions = [
       title="Congrats, that was it."
       nextLabel="Show me the steps"
     >
-      <p>Now you have 39 answers. Let’s find the pattern.</p>
+      <p>Now you have about 36 answers. Let’s find the pattern.</p>
     </Step>
 
     <Step
@@ -280,10 +274,13 @@ const questions = [
         </li>
       </ol>
       <p>
-        The group at the top answers the question you started with: what is most
-        important to you right now, judging by what you actually do every day.
+        <b>The group at the top answers the question you started with:</b> "What is
+        most important to me right now, judging by what I actually do every day."
       </p>
-      <p>Your values change, so it’s worth doing this again in three months.</p>
+      <p>
+        Good to know: Your values change over time, so it’s worth doing this
+        again in 3-6 months.
+      </p>
       <p>
         <a
           href="https://instagram.com/ioanaorca"
